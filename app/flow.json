@@ -9,11 +9,18 @@
             },
             "scenes": [
                 {
-                    "imageSrc": "/sceneImages/beginning1",
+                    "image": "page-placeholder.png",
                     "texts": [
                         "First text here",
                         "Second text here",
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget odio sagittis, faucibus tortor sit amet, pretium velit. Suspendisse blandit, quam at rhoncus convallis, libero lacus rhoncus est, ut porta magna neque quis libero. Quisque pellentesque tellus enim, eu tristique lectus posuere ut. Donec elit elit, suscipit vel orci at, congue sollicitudin diam. Aliquam in est aliquam, lacinia sem ac, dignissim nibh. Nam tellus enim, molestie et maximus sit amet, cursus quis mauris. Morbi sed augue ut turpis consectetur imperdiet vel id erat. Integer sollicitudin mauris magna, non laoreet lorem condimentum nec. In non leo quis turpis tristique tempor at eget sem. Nam at leo non tortor facilisis porta in id urna. Curabitur eu sem sollicitudin, aliquam risus nec, laoreet felis."
+                    ]
+                },
+                {
+                    "image": "page-placeholder2.png",
+                    "texts": [
+                        "2 First text here",
+                        "2 Second text here"
                     ]
                 }
             ]
@@ -27,7 +34,7 @@
             },
             "scenes": [
                 {
-                    "imageSrc": "/sceneImages/rose1",
+                    "image": "page-placeholder3.png",
                     "texts": [
                         "First text here",
                         "Second text here"
@@ -42,7 +49,7 @@
             },
             "scenes": [
                 {
-                    "imageSrc": "/sceneImages/roseLetter1",
+                    "image": "page-placeholder.png",
                     "texts": [
                         "First text here",
                         "Second text here"
@@ -54,7 +61,7 @@
             "name": "roseLetterDagger",
             "scenes": [
                 {
-                    "imageSrc": "/sceneImages/roseLetterDagger1",
+                    "image": "page-placeholder3.png",
                     "texts": [
                         "First text here",
                         "Second text here"

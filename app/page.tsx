@@ -4,14 +4,58 @@ import Image from "next/image";
 import Link from "next/link";
 import { charm } from "./fonts/fonts";
 import { useState } from "react";
+import flow from "./flow.json"
 
+var imageFolder = "/sceneImages/";
 
+var currentSceneSequenceIndex = 0;
+var currentSceneSequence = flow.sceneSequences[currentSceneSequenceIndex];
+var currentSceneIndex = 0
+var currentScene = currentSceneSequence.scenes[currentSceneIndex];
+var currentTextIndex = 0;
 
 export default function Home() {
-  const [imageSrc, setImageSrc] = useState("/sceneImages/page-placeholder.png");
+
+  const [imageSrc, setImageSrc] = useState(imageFolder + currentScene.image);
+  const [storyText, setStoryText] = useState(currentScene.texts[currentTextIndex])
+
+  const endGame = () => {
+    // TODO: Game ending
+  }
+
+  const changeSceneSequence = () => {
+    currentSceneSequenceIndex = currentSceneSequenceIndex + 1;
+    if (flow.sceneSequences.length > currentSceneSequenceIndex) {
+      currentSceneSequence = flow.sceneSequences[currentSceneSequenceIndex];
+      currentSceneIndex = 0;
+      currentScene = currentSceneSequence.scenes[currentSceneIndex];
+      setImageSrc(imageFolder + currentScene.image);
+      currentTextIndex = 0;
+      setStoryText(currentScene.texts[currentTextIndex]);
+    } else {
+      endGame();
+    }
+  }
+
+  const changeScene = () => {
+    currentSceneIndex = currentSceneIndex + 1;
+    if (currentSceneSequence.scenes.length > currentSceneIndex) {
+      currentScene = currentSceneSequence.scenes[currentSceneIndex];
+      setImageSrc(imageFolder + currentScene.image);
+      currentTextIndex = 0;
+      setStoryText(currentScene.texts[currentTextIndex]);
+    } else {
+      changeSceneSequence();
+    }
+  }
 
   const handleButtonClick = () => {
-    setImageSrc("/sceneImages/page-placeholder3.png");
+    currentTextIndex = currentTextIndex + 1;
+    if (currentScene.texts.length > currentTextIndex) {
+      setStoryText(currentScene.texts[currentTextIndex]);
+    } else {
+      changeScene();
+    }
   };
 
   return (
@@ -38,7 +82,7 @@ export default function Home() {
           width={16}
           height={16}
         />
-        This box will have text.
+        {storyText}
       </button>
     </main>
   );
