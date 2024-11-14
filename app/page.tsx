@@ -1,28 +1,29 @@
-'use client'
+"use client"
 
 import Image from "next/image";
-import Link from "next/link";
 import { charm } from "./fonts/fonts";
 import { useState } from "react";
 import flow from "./flow.json"
 
-var imageFolder = "/sceneImages/";
+const imageFolder = "/sceneImages/";
 
-var currentSceneSequenceIndex = 0;
-var currentSceneSequence = flow.sceneSequences[currentSceneSequenceIndex];
-var currentSceneIndex = 0
-var currentScene = currentSceneSequence.scenes[currentSceneIndex];
-var currentTextIndex = 0;
+let currentSceneSequenceIndex = 0;
+let currentSceneSequence = flow.sceneSequences[currentSceneSequenceIndex];
+let currentSceneIndex = 0
+let currentScene = currentSceneSequence.scenes[currentSceneIndex];
+let currentTextIndex = 0;
 
 export default function Home() {
 
   const [imageSrc, setImageSrc] = useState(imageFolder + currentScene.image);
   const [storyText, setStoryText] = useState(currentScene.texts[currentTextIndex])
+  const [isNextButtonDisabled, setIsNextButtonDisabled] = useState(false);
 
   const endGame = () => {
     // TODO: Game ending
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const changeSceneSequence = () => {
     currentSceneSequenceIndex = currentSceneSequenceIndex + 1;
     if (flow.sceneSequences.length > currentSceneSequenceIndex) {
@@ -37,6 +38,10 @@ export default function Home() {
     }
   }
 
+  const itemChoice = () => {
+    setIsNextButtonDisabled(true);
+  }
+
   const changeScene = () => {
     currentSceneIndex = currentSceneIndex + 1;
     if (currentSceneSequence.scenes.length > currentSceneIndex) {
@@ -45,7 +50,8 @@ export default function Home() {
       currentTextIndex = 0;
       setStoryText(currentScene.texts[currentTextIndex]);
     } else {
-      changeSceneSequence();
+      itemChoice();
+      //changeSceneSequence();
     }
   }
 
@@ -62,6 +68,7 @@ export default function Home() {
     <main className="flex flex-grow flex-col gap-8 justify-between items-center h-full w-full">
       <button
         onClick={handleButtonClick}
+        disabled={isNextButtonDisabled}
       >
         <Image
           className="rounded-md border border-solid"
