@@ -6,13 +6,6 @@ import { Suspense, useState } from "react";
 import flow from "./flow.json"
 import Items from "./items";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Metadata } from "next";
-
-
-export const metadata: Metadata = {
-  title: "The Last Dawn",
-  description: "Visual novel",
-};
 
 const imageFolder = "/sceneImages/";
 
