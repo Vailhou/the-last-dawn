@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import { charm } from "./fonts/fonts";
-import { Suspense, useState } from "react";
 import flow from "./flow.json"
 import Items from "./items";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 const imageFolder = "/sceneImages/";
 
@@ -107,7 +107,6 @@ export default function Home() {
   // }
 
   return (
-    <Suspense>
       <main className="flex flex-grow flex-col sm:flex-row gap-8 justify-between items-center h-full w-full">
         <div className="flex flex-grow flex-col gap-8 justify-center items-center h-full w-full">
           <button
@@ -140,6 +139,5 @@ export default function Home() {
         </div>
         <Items isItemsActive={isItemsActive} disableItems={disableItems} />
       </main>
-    </Suspense>
   );
 }
