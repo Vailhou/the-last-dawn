@@ -1,16 +1,20 @@
 "use client"
 
 import Image from "next/image";
-import { useState } from "react";
 
-export default function Items() {
-  const [isItemsDisabled] = useState(true);
+interface Items {
+  isItemsActive: boolean,
+  disableItems: VoidFunction
+}
+
+export default function Items({ isItemsActive, disableItems }: Items) {
 
   return (
     <div className="flex h-full flex-col px-3 py-4 items-start justify-evenly md:px-2">
       <button
         //className="mb-2 flex h-20 items-end justify-start rounded-md bg-blue-600 p-4 md:h-40"
-        disabled={isItemsDisabled}
+        disabled={isItemsActive}
+        onClick={() => disableItems}
       >
         <Image
           src="/rose.jpg"
@@ -22,7 +26,7 @@ export default function Items() {
       </button>
       <button
         //className="mb-2 flex h-20 items-end justify-start rounded-md bg-blue-600 p-4 md:h-40"
-        disabled={isItemsDisabled}
+        disabled={isItemsActive}
       >
         <Image
           src="/dagger.png"
@@ -34,7 +38,7 @@ export default function Items() {
       </button>
       <button
         //className="mb-2 flex h-20 items-end justify-start rounded-md bg-blue-600 p-4 md:h-40"
-        disabled={isItemsDisabled}
+        disabled={isItemsActive}
       >
         <Image
           src="/letter.png"

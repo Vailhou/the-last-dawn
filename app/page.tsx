@@ -4,20 +4,54 @@ import Image from "next/image";
 import { charm } from "./fonts/fonts";
 import { useState } from "react";
 import flow from "./flow.json"
+import Items from "./items";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const imageFolder = "/sceneImages/";
 
 let currentSceneSequenceIndex = 0;
 let currentSceneSequence = flow.sceneSequences[currentSceneSequenceIndex];
-let currentSceneIndex = 0
-let currentScene = currentSceneSequence.scenes[currentSceneIndex];
 let currentTextIndex = 0;
 
 export default function Home() {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+  
+  function getSceneIndex() {
+    return Number((searchParams.get("scene") ?? "0"));
+  }
 
-  const [imageSrc, setImageSrc] = useState(imageFolder + currentScene.image);
-  const [storyText, setStoryText] = useState(currentScene.texts[currentTextIndex])
+  const [storyText, setStoryText] = useState(getTextIndex())
   const [isNextButtonDisabled, setIsNextButtonDisabled] = useState(false);
+  
+  function setSceneIndexParam(index: number) {
+    const params = new URLSearchParams(searchParams);
+    params.set("scene", index.toString())
+    router.replace(`${pathname}?${params.toString()}`);
+  }
+
+  function getScene() {
+    return currentSceneSequence.scenes[getSceneIndex()];
+  }
+
+  function getImageSrc() {
+    const imageName = getScene().image
+    return imageFolder + imageName;
+  }
+
+  function getTextIndex() {
+    return getScene().texts[currentTextIndex]
+  }
+
+  function setTextIndex(index: number) {
+    currentTextIndex = index;
+  }
+
+  function setText(index: number) {
+    setTextIndex(index);
+    setStoryText(getScene().texts[index]);
+  }
 
   const endGame = () => {
     // TODO: Game ending
@@ -28,11 +62,8 @@ export default function Home() {
     currentSceneSequenceIndex = currentSceneSequenceIndex + 1;
     if (flow.sceneSequences.length > currentSceneSequenceIndex) {
       currentSceneSequence = flow.sceneSequences[currentSceneSequenceIndex];
-      currentSceneIndex = 0;
-      currentScene = currentSceneSequence.scenes[currentSceneIndex];
-      setImageSrc(imageFolder + currentScene.image);
-      currentTextIndex = 0;
-      setStoryText(currentScene.texts[currentTextIndex]);
+      setSceneIndexParam(0);
+      setText(0);
     } else {
       endGame();
     }
@@ -40,15 +71,16 @@ export default function Home() {
 
   const itemChoice = () => {
     setIsNextButtonDisabled(true);
+    
   }
 
   const changeScene = () => {
-    currentSceneIndex = currentSceneIndex + 1;
-    if (currentSceneSequence.scenes.length > currentSceneIndex) {
-      currentScene = currentSceneSequence.scenes[currentSceneIndex];
-      setImageSrc(imageFolder + currentScene.image);
-      currentTextIndex = 0;
-      setStoryText(currentScene.texts[currentTextIndex]);
+    const sceneIndex = getSceneIndex() + 1;
+
+    if (currentSceneSequence.scenes.length > sceneIndex) {
+      setSceneIndexParam(sceneIndex);
+      setText(0);
+      setSceneIndexParam(sceneIndex);
     } else {
       itemChoice();
       //changeSceneSequence();
@@ -57,40 +89,53 @@ export default function Home() {
 
   const handleButtonClick = () => {
     currentTextIndex = currentTextIndex + 1;
-    if (currentScene.texts.length > currentTextIndex) {
-      setStoryText(currentScene.texts[currentTextIndex]);
+    if (getScene().texts.length > currentTextIndex) {
+      setText(currentTextIndex);
     } else {
       changeScene();
     }
   };
 
+  const [isItemsActive, setIsItemsActive] = useState(true);
+
+  function disableItems() {
+    setIsItemsActive(false);
+  }
+
+  // function enableItems() {
+  //   setIsItemsActive(true);
+  // }
+
   return (
-    <main className="flex flex-grow flex-col gap-8 justify-between items-center h-full w-full">
-      <button
-        onClick={handleButtonClick}
-        disabled={isNextButtonDisabled}
-      >
-        <Image
-          className="rounded-md border border-solid"
-          src={imageSrc}
-          alt="Story page"
-          width={500}
-          height={300}
-          priority
-        />
-      </button>
-      <button
-        className={`${charm.className} rounded-md border border-solid border-transparent transition-colors flex items-start bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-4xl h-10 sm:h-48 sm:w-11/12 px-4 sm:px-5 p-5`}
-      >
-        <Image
-          className="dark:invert rotate-180 m-2"
-          src="/vercel.svg"
-          alt="Vercel logomark"
-          width={16}
-          height={16}
-        />
-        {storyText}
-      </button>
+    <main className="flex flex-grow flex-row gap-8 justify-between items-center h-full w-full">
+      <div className="flex flex-grow flex-col gap-8 justify-between items-center h-full w-full">
+        <button
+          onClick={handleButtonClick}
+          disabled={isNextButtonDisabled}
+        >
+          <Image
+            className="rounded-md border border-solid"
+            src={getImageSrc()}
+            alt="Story page"
+            width={500}
+            height={300}
+            priority
+          />
+        </button>
+        <button
+          className={`${charm.className} rounded-md border border-solid border-transparent transition-colors flex items-start bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-4xl h-10 sm:h-48 sm:w-11/12 px-4 sm:px-5 p-5`}
+        >
+          <Image
+            className="dark:invert rotate-180 m-2"
+            src="/vercel.svg"
+            alt="Vercel logomark"
+            width={16}
+            height={16}
+          />
+          {storyText}
+        </button>
+      </div>
+      <Items isItemsActive={isItemsActive} disableItems={disableItems} />
     </main>
   );
 }
