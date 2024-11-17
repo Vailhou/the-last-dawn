@@ -107,8 +107,8 @@ export default function Home() {
   // }
 
   return (
-    <main className="flex flex-grow flex-row gap-8 justify-between items-center h-full w-full">
-      <div className="flex flex-grow flex-col gap-8 justify-between items-center h-full w-full">
+    <main className="flex flex-grow flex-col sm:flex-row gap-8 justify-between items-center h-full w-full">
+      <div className="flex flex-grow flex-col gap-8 justify-center items-center h-full w-full">
         <button
           onClick={handleButtonClick}
           disabled={isNextButtonDisabled}
@@ -123,10 +123,12 @@ export default function Home() {
           />
         </button>
         <button
-          className={`${charm.className} rounded-md border border-solid border-transparent transition-colors flex items-start bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-4xl h-10 sm:h-48 sm:w-11/12 px-4 sm:px-5 p-5`}
+          className={`${charm.className} rounded-md border border-solid border-transparent transition-colors flex items-start bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-xl sm:text-4xl h-48 w-11/12 px-2 sm:px-5 p-5`}
+          onClick={handleButtonClick}
+          disabled={isNextButtonDisabled}
         >
           <Image
-            className="dark:invert rotate-180 m-2"
+            className="dark:invert rotate-180 m-2 size-4"
             src="/vercel.svg"
             alt="Vercel logomark"
             width={16}

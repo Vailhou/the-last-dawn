@@ -8,46 +8,35 @@ interface Items {
 }
 
 export default function Items({ isItemsActive, disableItems }: Items) {
-
-  return (
-    <div className="flex h-full flex-col px-3 py-4 items-start justify-evenly md:px-2">
+  interface Item {
+    imgSrc: string;
+    imgAlt: string;
+  }
+  
+  function Item({ imgSrc, imgAlt }: Item ) {
+    return (
       <button
         //className="mb-2 flex h-20 items-end justify-start rounded-md bg-blue-600 p-4 md:h-40"
+        className="size-16 sm:size-24"
         disabled={isItemsActive}
         onClick={() => disableItems}
       >
         <Image
-          src="/rose.jpg"
-          width={100}
-          height={100}
+          src={imgSrc}
+          width={128}
+          height={128}
           className="rounded-full border border-solid"
-          alt="Rose"
+          alt={imgAlt}
         />
       </button>
-      <button
-        //className="mb-2 flex h-20 items-end justify-start rounded-md bg-blue-600 p-4 md:h-40"
-        disabled={isItemsActive}
-      >
-        <Image
-          src="/dagger.png"
-          width={100}
-          height={100}
-          className="rounded-full border border-solid"
-          alt="Dagger"
-        />
-      </button>
-      <button
-        //className="mb-2 flex h-20 items-end justify-start rounded-md bg-blue-600 p-4 md:h-40"
-        disabled={isItemsActive}
-      >
-        <Image
-          src="/letter.png"
-          width={100}
-          height={100}
-          className="rounded-full border border-solid"
-          alt="Letter"
-        />
-      </button>
+    )
+  }
+
+  return (
+    <div className="flex w-full sm:w-auto sm:h-full flex-fow sm:flex-col px-2 py-2 sm:items-start justify-evenly md:px-2">
+      <Item imgSrc="/rose.jpg" imgAlt="Rose" />
+      <Item imgSrc="/dagger.png" imgAlt="Dagger" />
+      <Item imgSrc="/letter.png" imgAlt="Letter" />
     </div>
   );
 }
