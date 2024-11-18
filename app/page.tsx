@@ -11,24 +11,27 @@ const imageFolder = "/sceneImages/";
 
 let currentSceneSequenceIndex = 0;
 let currentSceneSequence = flow.sceneSequences[currentSceneSequenceIndex];
-let currentTextIndex = 0;
+
+const paramTypes = {
+  scene: "scene",
+  text: "text"
+}
 
 export default function Home() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
+  const params = new URLSearchParams(searchParams);
 
   function getSceneIndex() {
-    return Number((searchParams.get("scene") ?? "0"));
+    return Number((searchParams.get(paramTypes.scene) ?? "0"));
   }
 
-  const [storyText, setStoryText] = useState(getTextIndex())
   const [isNextButtonDisabled, setIsNextButtonDisabled] = useState(false);
 
-  function setSceneIndexParam(index: number) {
-    const params = new URLSearchParams(searchParams);
-    params.set("scene", index.toString())
-    router.replace(`${pathname}?${params.toString()}`);
+  function setSceneIndex(index: number) {
+    params.set(paramTypes.scene, index.toString())
+    router.push(`${pathname}?${params.toString()}`);
   }
 
   function getScene() {
@@ -41,16 +44,21 @@ export default function Home() {
   }
 
   function getTextIndex() {
-    return getScene().texts[currentTextIndex]
+    return Number((searchParams.get(paramTypes.text) ?? "0"));
+  }
+
+  function setTextIndexParam(index: number) {
+    params.set(paramTypes.text, index.toString())
+    router.push(`${pathname}?${params.toString()}`);
+  }
+
+  function getText() {
+    return getScene().texts[getTextIndex()];
   }
 
   function setTextIndex(index: number) {
-    currentTextIndex = index;
-  }
-
-  function setText(index: number) {
-    setTextIndex(index);
-    setStoryText(getScene().texts[index]);
+    setTextIndexParam(index);
+    //setStoryText(getScene().texts[index]);
   }
 
   const endGame = () => {
@@ -62,8 +70,8 @@ export default function Home() {
     currentSceneSequenceIndex = currentSceneSequenceIndex + 1;
     if (flow.sceneSequences.length > currentSceneSequenceIndex) {
       currentSceneSequence = flow.sceneSequences[currentSceneSequenceIndex];
-      setSceneIndexParam(0);
-      setText(0);
+      setSceneIndex(0);
+      setTextIndex(0);
     } else {
       endGame();
     }
@@ -76,11 +84,9 @@ export default function Home() {
 
   const changeScene = () => {
     const sceneIndex = getSceneIndex() + 1;
-
     if (currentSceneSequence.scenes.length > sceneIndex) {
-      setSceneIndexParam(sceneIndex);
-      setText(0);
-      setSceneIndexParam(sceneIndex);
+      setSceneIndex(sceneIndex);
+      setTextIndex(0);
     } else {
       itemChoice();
       //changeSceneSequence();
@@ -88,9 +94,9 @@ export default function Home() {
   }
 
   const handleButtonClick = () => {
-    currentTextIndex = currentTextIndex + 1;
-    if (getScene().texts.length > currentTextIndex) {
-      setText(currentTextIndex);
+    const textIndex = getTextIndex() + 1;
+    if (getScene().texts.length > textIndex) {
+      setTextIndex(textIndex);
     } else {
       changeScene();
     }
@@ -134,7 +140,7 @@ export default function Home() {
               width={16}
               height={16}
             />
-            {storyText}
+            {getText()}
           </button>
         </div>
         <Items isItemsActive={isItemsActive} disableItems={disableItems} />
