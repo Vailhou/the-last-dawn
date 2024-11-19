@@ -5,16 +5,17 @@ import { charm } from "./fonts/fonts";
 import flow from "./flow.json"
 import Items from "./items";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import Link from "next/link";
 
 const imageFolder = "/sceneImages/";
 
-let currentSceneSequenceIndex = 0;
-let currentSceneSequence = flow.sceneSequences[currentSceneSequenceIndex];
+const currentSceneSequenceIndex = 0;
+const currentSceneSequence = flow.sceneSequences[currentSceneSequenceIndex];
 
-const paramTypes = {
-  scene: "scene",
-  text: "text"
+const paramNames = {
+  sceneIndex: "scene",
+  textIndex: "text",
+  isItemChoiceActive: "choice"
 }
 
 export default function Home() {
@@ -23,15 +24,21 @@ export default function Home() {
   const router = useRouter();
   const params = new URLSearchParams(searchParams);
 
-  function getSceneIndex() {
-    return Number((searchParams.get(paramTypes.scene) ?? "0"));
+  function getSearchParam(paramName: string) {
+    return Number(searchParams.get(paramName) ?? "0");
   }
 
-  const [isNextButtonDisabled, setIsNextButtonDisabled] = useState(false);
+  function setSearchParam(paramName: string, index: number) {
+    params.set(paramName, index.toString())
+    router.replace(`${pathname}?${params.toString()}`);
+  }
+
+  function getSceneIndex() {
+    return getSearchParam(paramNames.sceneIndex)
+  }
 
   function setSceneIndex(index: number) {
-    params.set(paramTypes.scene, index.toString())
-    router.push(`${pathname}?${params.toString()}`);
+    setSearchParam(paramNames.sceneIndex, index);
   }
 
   function getScene() {
@@ -39,47 +46,48 @@ export default function Home() {
   }
 
   function getImageSrc() {
-    const imageName = getScene().image
+    const imageName = getScene().image;
     return imageFolder + imageName;
   }
 
   function getTextIndex() {
-    return Number((searchParams.get(paramTypes.text) ?? "0"));
-  }
-
-  function setTextIndexParam(index: number) {
-    params.set(paramTypes.text, index.toString())
-    router.push(`${pathname}?${params.toString()}`);
-  }
-
-  function getText() {
-    return getScene().texts[getTextIndex()];
+    return getSearchParam(paramNames.textIndex)
   }
 
   function setTextIndex(index: number) {
-    setTextIndexParam(index);
+    setSearchParam(paramNames.textIndex, index);
     //setStoryText(getScene().texts[index]);
   }
 
-  const endGame = () => {
-    // TODO: Game ending
+  function getText() {
+    return getScene().texts[getSceneIndex()];
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const changeSceneSequence = () => {
-    currentSceneSequenceIndex = currentSceneSequenceIndex + 1;
-    if (flow.sceneSequences.length > currentSceneSequenceIndex) {
-      currentSceneSequence = flow.sceneSequences[currentSceneSequenceIndex];
-      setSceneIndex(0);
-      setTextIndex(0);
-    } else {
-      endGame();
-    }
+  // const endGame = () => {
+  //   // TODO: Game ending
+  // }
+
+  // const changeSceneSequence = () => {
+  //   currentSceneSequenceIndex = currentSceneSequenceIndex + 1;
+  //   if (flow.sceneSequences.length > currentSceneSequenceIndex) {
+  //     currentSceneSequence = flow.sceneSequences[currentSceneSequenceIndex];
+  //     setSceneIndex(0);
+  //     setTextIndex(0);
+  //   } else {
+  //     endGame();
+  //   }
+  // }
+
+  function setIsItemChoiceActive(isActive: boolean) {
+    setSearchParam(paramNames.isItemChoiceActive, isActive ? 1 : 0);
+  }
+
+  function getIsItemChoiceActive() {
+    return Boolean(getSearchParam(paramNames.isItemChoiceActive));
   }
 
   const itemChoice = () => {
-    setIsNextButtonDisabled(true);
-
+    setIsItemChoiceActive(true);
   }
 
   const changeScene = () => {
@@ -102,48 +110,45 @@ export default function Home() {
     }
   };
 
-  const [isItemsActive, setIsItemsActive] = useState(true);
-
   function disableItems() {
-    setIsItemsActive(false);
+    setIsItemChoiceActive(false);
   }
 
-  // function enableItems() {
-  //   setIsItemsActive(true);
-  // }
-
   return (
-      <main className="flex flex-grow flex-col sm:flex-row gap-8 justify-between items-center h-full w-full">
-        <div className="flex flex-grow flex-col gap-8 justify-center items-center h-full w-full">
-          <button
-            onClick={handleButtonClick}
-            disabled={isNextButtonDisabled}
-          >
-            <Image
-              className="rounded-md border border-solid"
-              src={getImageSrc()}
-              alt="Story page"
-              width={500}
-              height={300}
-              priority
-            />
-          </button>
-          <button
-            className={`${charm.className} rounded-md border border-solid border-transparent transition-colors flex items-start bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-xl sm:text-4xl h-48 w-11/12 px-2 sm:px-5 p-5`}
-            onClick={handleButtonClick}
-            disabled={isNextButtonDisabled}
-          >
-            <Image
-              className="dark:invert rotate-180 m-2 size-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            {getText()}
-          </button>
-        </div>
-        <Items isItemsActive={isItemsActive} disableItems={disableItems} />
-      </main>
+    <main className="flex flex-grow flex-col sm:flex-row gap-8 justify-between items-center h-full w-full">
+      <div className="flex flex-grow flex-col gap-8 justify-center items-center h-full w-full">
+        <Link
+          href="/"
+          className={getIsItemChoiceActive() ? "pointer-events-none" : ""}
+          aria-disabled={getIsItemChoiceActive()}
+          tabIndex={getIsItemChoiceActive() ? -1 : undefined}
+          replace={true}
+        >
+          <Image
+            className="rounded-md border border-solid"
+            src={getImageSrc()}
+            alt="Story page"
+            width={500}
+            height={300}
+            priority
+          />
+        </Link>
+        <button
+          className={`${charm.className} rounded-md border border-solid border-transparent transition-colors flex items-start bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-xl sm:text-4xl h-48 w-11/12 px-2 sm:px-5 p-5`}
+          onClick={handleButtonClick}
+          disabled={getIsItemChoiceActive()}
+        >
+          <Image
+            className="dark:invert rotate-180 m-2 size-4"
+            src="/vercel.svg"
+            alt="Vercel logomark"
+            width={16}
+            height={16}
+          />
+          {getText()}
+        </button>
+      </div>
+      <Items isItemsActive={getIsItemChoiceActive()} disableItems={disableItems} />
+    </main>
   );
 }
