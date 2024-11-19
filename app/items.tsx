@@ -1,13 +1,10 @@
-"use client"
-
 import Image from "next/image";
 
 interface Items {
   isItemsActive: boolean,
-  disableItems: VoidFunction
 }
 
-export default function Items({ isItemsActive, disableItems }: Items) {
+export default function Items({ isItemsActive }: Items) {
   interface Item {
     imgSrc: string;
     imgAlt: string;
@@ -18,8 +15,7 @@ export default function Items({ isItemsActive, disableItems }: Items) {
       <button
         //className="mb-2 flex h-20 items-end justify-start rounded-md bg-blue-600 p-4 md:h-40"
         className="size-16 sm:size-24"
-        disabled={isItemsActive}
-        onClick={() => disableItems}
+        disabled={!isItemsActive}
       >
         <Image
           src={imgSrc}

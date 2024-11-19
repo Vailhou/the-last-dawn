@@ -1,48 +1,29 @@
-"use client"
-
 import Image from "next/image";
 import { charm } from "./fonts/fonts";
 import flow from "./flow.json"
-import Items from "./items";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import Items from "./items";
 
 const imageFolder = "/sceneImages/";
-
 const currentSceneSequenceIndex = 0;
 const currentSceneSequence = flow.sceneSequences[currentSceneSequenceIndex];
 
-const paramNames = {
-  sceneIndex: "scene",
-  textIndex: "text",
-  isItemChoiceActive: "choice"
-}
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
 
-export default function Home() {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const router = useRouter();
-  const params = new URLSearchParams(searchParams);
+export default async function Home(props: {
+  searchParams: SearchParams
+}) {
+  const searchParams = await props.searchParams
+  const text = searchParams.text
+  const scene = searchParams.scene
+  const choice = searchParams.choice
 
-  function getSearchParam(paramName: string) {
-    return Number(searchParams.get(paramName) ?? "0");
-  }
-
-  function setSearchParam(paramName: string, index: number) {
-    params.set(paramName, index.toString())
-    router.replace(`${pathname}?${params.toString()}`);
-  }
-
-  function getSceneIndex() {
-    return getSearchParam(paramNames.sceneIndex)
-  }
-
-  function setSceneIndex(index: number) {
-    setSearchParam(paramNames.sceneIndex, index);
-  }
+  const textIndex = Number(text || "0");
+  const sceneIndex = Number(scene || "0");
+  const isChoiceActive = ("true" === (choice || "false)"));
 
   function getScene() {
-    return currentSceneSequence.scenes[getSceneIndex()];
+    return currentSceneSequence.scenes[sceneIndex];
   }
 
   function getImageSrc() {
@@ -50,78 +31,58 @@ export default function Home() {
     return imageFolder + imageName;
   }
 
-  function getTextIndex() {
-    return getSearchParam(paramNames.textIndex)
-  }
-
-  function setTextIndex(index: number) {
-    setSearchParam(paramNames.textIndex, index);
-    //setStoryText(getScene().texts[index]);
-  }
-
   function getText() {
-    return getScene().texts[getSceneIndex()];
+    return getScene().texts[textIndex];
   }
 
-  // const endGame = () => {
-  //   // TODO: Game ending
-  // }
+  function getLink() {
+    let nextTextIndex = textIndex;
+    let nextSceneIndex = sceneIndex;
+    let nextIsChoiceActive = isChoiceActive;
 
-  // const changeSceneSequence = () => {
-  //   currentSceneSequenceIndex = currentSceneSequenceIndex + 1;
-  //   if (flow.sceneSequences.length > currentSceneSequenceIndex) {
-  //     currentSceneSequence = flow.sceneSequences[currentSceneSequenceIndex];
-  //     setSceneIndex(0);
-  //     setTextIndex(0);
-  //   } else {
-  //     endGame();
-  //   }
-  // }
+    // const endGame = () => {
+    //   // TODO: Game ending
+    // }
 
-  function setIsItemChoiceActive(isActive: boolean) {
-    setSearchParam(paramNames.isItemChoiceActive, isActive ? 1 : 0);
-  }
+    // const changeSceneSequence = () => {
+    //   currentSceneSequenceIndex = currentSceneSequenceIndex + 1;
+    //   if (flow.sceneSequences.length > currentSceneSequenceIndex) {
+    //     currentSceneSequence = flow.sceneSequences[currentSceneSequenceIndex];
+    //     setSceneIndex(0);
+    //     setTextIndex(0);
+    //   } else {
+    //     endGame();
+    //   }
+    // }
 
-  function getIsItemChoiceActive() {
-    return Boolean(getSearchParam(paramNames.isItemChoiceActive));
-  }
-
-  const itemChoice = () => {
-    setIsItemChoiceActive(true);
-  }
-
-  const changeScene = () => {
-    const sceneIndex = getSceneIndex() + 1;
-    if (currentSceneSequence.scenes.length > sceneIndex) {
-      setSceneIndex(sceneIndex);
-      setTextIndex(0);
-    } else {
-      itemChoice();
-      //changeSceneSequence();
+    function changeScene() {
+      nextSceneIndex = sceneIndex + 1;
+      if (currentSceneSequence.scenes.length <= nextSceneIndex) {
+        nextSceneIndex = 0;
+        nextIsChoiceActive = true;
+      }
     }
-  }
 
-  const handleButtonClick = () => {
-    const textIndex = getTextIndex() + 1;
-    if (getScene().texts.length > textIndex) {
-      setTextIndex(textIndex);
-    } else {
-      changeScene();
-    }
-  };
+    function changeText() {
+      nextTextIndex = textIndex + 1;
+      if (getScene().texts.length <= nextTextIndex) {
+        nextTextIndex = 0;
+        changeScene();
+      }
+    };
 
-  function disableItems() {
-    setIsItemChoiceActive(false);
+    changeText();
+    return `?text=${nextTextIndex}&scene=${nextSceneIndex}&choice=${nextIsChoiceActive}`
   }
 
   return (
     <main className="flex flex-grow flex-col sm:flex-row gap-8 justify-between items-center h-full w-full">
       <div className="flex flex-grow flex-col gap-8 justify-center items-center h-full w-full">
         <Link
-          href="/"
-          className={getIsItemChoiceActive() ? "pointer-events-none" : ""}
-          aria-disabled={getIsItemChoiceActive()}
-          tabIndex={getIsItemChoiceActive() ? -1 : undefined}
+          href={getLink()}
+          className={isChoiceActive ? "pointer-events-none" : ""}
+          aria-disabled={isChoiceActive}
+          tabIndex={isChoiceActive ? -1 : undefined}
           replace={true}
         >
           <Image
@@ -133,22 +94,24 @@ export default function Home() {
             priority
           />
         </Link>
-        <button
-          className={`${charm.className} rounded-md border border-solid border-transparent transition-colors flex items-start bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-xl sm:text-4xl h-48 w-11/12 px-2 sm:px-5 p-5`}
-          onClick={handleButtonClick}
-          disabled={getIsItemChoiceActive()}
+        <Link
+          href={getLink()}
+          className={`${charm.className} ${isChoiceActive ? "pointer-events-none" : ""} rounded-md border border-solid border-transparent transition-colors flex items-start bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-xl sm:text-4xl h-48 w-11/12 px-2 sm:px-5 p-5`}
+          aria-disabled={isChoiceActive}
+          tabIndex={isChoiceActive ? -1 : undefined}
+          replace={true}
         >
           <Image
             className="dark:invert rotate-180 m-2 size-4"
             src="/vercel.svg"
-            alt="Vercel logomark"
+            alt="Triangle"
             width={16}
             height={16}
           />
           {getText()}
-        </button>
+        </Link>
       </div>
-      <Items isItemsActive={getIsItemChoiceActive()} disableItems={disableItems} />
+      <Items isItemsActive={isChoiceActive} />
     </main>
   );
 }
