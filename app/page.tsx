@@ -3,7 +3,7 @@ import { charm } from "./fonts/fonts";
 import flow from "./flow.json"
 import Link from "next/link";
 import Items from "./items";
-import { getImgSrc, getLink, getText } from "./getNextSearchParams";
+import { getImgSrc, getLink, getText } from "./getters";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
 
