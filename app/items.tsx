@@ -1,21 +1,30 @@
 import Image from "next/image";
+import Link from "next/link";
+import { charm } from "./fonts/fonts";
+import { choiceName, getItemLink, getLink } from "./getters";
 
 interface Items {
-  isItemsActive: boolean,
+  sceneSequenceName: string
+  isChoiceActive: boolean
 }
 
-export default function Items({ isItemsActive }: Items) {
-  interface Item {
-    imgSrc: string;
-    imgAlt: string;
+export default function Items({ sceneSequenceName, isChoiceActive }: Items) {
+  type Item = {
+    imgSrc: string
+    imgAlt: string
+    choiceName: string
   }
-  
-  function Item({ imgSrc, imgAlt }: Item ) {
+
+  function Item({ imgSrc, imgAlt, choiceName }: Item) {
     return (
-      <button
-        //className="mb-2 flex h-20 items-end justify-start rounded-md bg-blue-600 p-4 md:h-40"
-        className="size-16 sm:size-24"
-        disabled={!isItemsActive}
+      <Link
+        href={getItemLink("beginning", "romantic")}
+        // href={getItemLink("beginning", choiceName)}
+        // href={getLink("beginning", 0, 0)}
+        className={`${charm.className} ${!isChoiceActive ? "pointer-events-none" : ""} size-16 sm:size-24`}
+        aria-disabled={!isChoiceActive}
+        tabIndex={!isChoiceActive ? -1 : undefined}
+        replace={true}
       >
         <Image
           src={imgSrc}
@@ -24,15 +33,15 @@ export default function Items({ isItemsActive }: Items) {
           className="rounded-full border border-solid"
           alt={imgAlt}
         />
-      </button>
+      </Link>
     )
   }
 
   return (
     <div className="flex w-full sm:w-auto sm:h-full flex-fow sm:flex-col px-2 py-2 sm:items-start justify-evenly md:px-2">
-      <Item imgSrc="/rose.jpg" imgAlt="Rose" />
-      <Item imgSrc="/dagger.png" imgAlt="Dagger" />
-      <Item imgSrc="/letter.png" imgAlt="Letter" />
+      <Item imgSrc="/rose.jpg" imgAlt="Rose" choiceName={choiceName.romantic} />
+      <Item imgSrc="/dagger.png" imgAlt="Dagger" choiceName={choiceName.violent} />
+      <Item imgSrc="/letter.png" imgAlt="Letter" choiceName={choiceName.neutral} />
     </div>
   );
 }
