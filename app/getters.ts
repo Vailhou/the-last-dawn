@@ -71,7 +71,6 @@ export function getText(sceneIndex: number, textIndex: number) {
 
 export function getLink(sceneSequenceName: string, sceneIndex: number, textIndex: number): string {
   let sceneSequence = getSceneSequence(sceneSequenceName);
-  return "/";
   let nextSceneIndex = sceneIndex;
   let nextTextIndex = textIndex;
   let nextIsChoiceActive = false;
