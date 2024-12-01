@@ -34,7 +34,7 @@ export function declareEachJSON(): SceneSequence[] {
   const typeList: SceneSequence[] = [];
 
   fileNames.forEach((fileName: string) => {
-    let typeName = fileName.match(/(^.*?)\.json/);
+    const typeName = fileName.match(/(^.*?)\.json/);
     if (typeName) {
       const sceneSequenceString = fs.readFileSync(readPath + fileName, "utf8");
       const sceneSequenceObj = JSON.parse(sceneSequenceString);
@@ -70,7 +70,7 @@ export function getText(sceneIndex: number, textIndex: number) {
 }
 
 export function getLink(sceneSequenceName: string, sceneIndex: number, textIndex: number): string {
-  let sceneSequence = getSceneSequence(sceneSequenceName);
+  const sceneSequence = getSceneSequence(sceneSequenceName);
   let nextSceneIndex = sceneIndex;
   let nextTextIndex = textIndex;
   let nextIsChoiceActive = false;

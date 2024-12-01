@@ -1,23 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import { charm } from "./fonts/fonts";
-import { choiceName, getItemLink, getLink } from "./getters";
+import { choiceName, getItemLink } from "./getters";
 
 interface Items {
   sceneSequenceName: string
   isChoiceActive: boolean
 }
 
-export default function Items({ sceneSequenceName, isChoiceActive }: Items) {
+export default function Items({ isChoiceActive }: Items) {
   type Item = {
     imgSrc: string
     imgAlt: string
     choiceName: string
-  }
-
-  function test(testString: string) {
-    console.log("testString", testString)
-    return "/";
   }
 
   function Item({ imgSrc, imgAlt, choiceName }: Item) {
