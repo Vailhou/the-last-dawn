@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@next/eslint-plugin-next':
-        specifier: ^15.0.3
-        version: 15.0.3
       next:
         specifier: 15.0.0-rc.1
         version: 15.0.0-rc.1(react-dom@19.0.0-rc.1(react@19.0.0-rc.1))(react@19.0.0-rc.1)
@@ -24,6 +21,9 @@ importers:
       '@eslint/js':
         specifier: ^9.16.0
         version: 9.16.0
+      '@next/eslint-plugin-next':
+        specifier: ^15.0.3
+        version: 15.0.3
       '@types/node':
         specifier: ^22.10.1
         version: 22.10.1
