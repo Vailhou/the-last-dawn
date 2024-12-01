@@ -1,3 +1,5 @@
+"use server"
+
 import Image from "next/image";
 import { charm } from "./fonts/fonts";
 import Link from "next/link";

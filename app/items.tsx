@@ -1,3 +1,5 @@
+"use server"
+
 import Image from "next/image";
 import Link from "next/link";
 import { charm } from "./fonts/fonts";
@@ -8,7 +10,7 @@ interface Items {
   isChoiceActive: boolean
 }
 
-export default function Items({ isChoiceActive }: Items) {
+export default async function Items({ isChoiceActive }: Items) {
   type Item = {
     imgSrc: string
     imgAlt: string
