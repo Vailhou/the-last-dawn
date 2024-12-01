@@ -46,7 +46,6 @@ export function declareEachJSON(): SceneSequence[] {
 }
 
 function getSceneSequence(sceneSequenceName: string) {
-  console.log("getSceneSequence", sceneSequenceName)
   const sceneSequence = sceneSequences.find(
     (sceneSequence) => sceneSequence.name === sceneSequenceName
   );
@@ -111,10 +110,8 @@ export function getLink(sceneSequenceName: string, sceneIndex: number, textIndex
 }
 
 export function getItemLink(sceneSequenceName: string, itemType: string) {
-  console.log("sceneSequenceName", sceneSequenceName);
   const sceneSequence = getSceneSequence(sceneSequenceName);
   const choice = sceneSequence.choices.find((choice) => choice.name === itemType);
-  console.log("choice", choice)
 
   if (choice === undefined) {
     throw "Undefined choice";
