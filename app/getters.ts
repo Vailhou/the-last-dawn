@@ -1,17 +1,12 @@
+"use server"
+
 import beginning from "./sceneSequences/beginning.json";
-
-const imageFolder = "/sceneImages/";
-const currentSceneSequence = beginning;
-
 import * as fs from "fs";
-const readPath = "./app/sceneSequences/";
-const sceneSequences: SceneSequence[] = declareEachJSON();
 
-export const choiceName = {
-  romantic: "romantic",
-  violent: "violent",
-  neutral: "neutral"
-}
+const readPath = "./app/sceneSequences/";
+const imageFolder = "/sceneImages/";
+const sceneSequences: SceneSequence[] = declareEachJSON();
+const currentSceneSequence = beginning;
 
 type Choice = {
   name: string
@@ -29,7 +24,7 @@ type SceneSequence = {
   scenes: Scene[]
 }
 
-export function declareEachJSON(): SceneSequence[] {
+function declareEachJSON(): SceneSequence[] {
   const fileNames = fs.readdirSync(readPath).filter(file => file.match(/\.json$/));
   const typeList: SceneSequence[] = [];
 
@@ -59,16 +54,16 @@ function getScene(sceneIndex: number) {
   return currentSceneSequence.scenes[sceneIndex];
 }
 
-export function getImgSrc(sceneIndex: number) {
+export async function getImgSrc(sceneIndex: number) {
   const imageName = getScene(sceneIndex).image;
   return imageFolder + imageName;
 }
 
-export function getText(sceneIndex: number, textIndex: number) {
+export async function getText(sceneIndex: number, textIndex: number) {
   return getScene(sceneIndex).texts[textIndex];
 }
 
-export function getLink(sceneSequenceName: string, sceneIndex: number, textIndex: number): string {
+export async function getLink(sceneSequenceName: string, sceneIndex: number, textIndex: number): Promise<string> {
   const sceneSequence = getSceneSequence(sceneSequenceName);
   let nextSceneIndex = sceneIndex;
   let nextTextIndex = textIndex;
@@ -109,7 +104,7 @@ export function getLink(sceneSequenceName: string, sceneIndex: number, textIndex
   return `?text=${nextTextIndex}&scene=${nextSceneIndex}&choice=${nextIsChoiceActive}`;
 }
 
-export function getItemLink(sceneSequenceName: string, itemType: string) {
+export async function getItemLink(sceneSequenceName: string, itemType: string) {
   const sceneSequence = getSceneSequence(sceneSequenceName);
   const choice = sceneSequence.choices.find((choice) => choice.name === itemType);
 
