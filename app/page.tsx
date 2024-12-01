@@ -29,6 +29,7 @@ export default async function Home(props: {
           aria-disabled={isChoiceActive}
           tabIndex={isChoiceActive ? -1 : undefined}
           replace={true}
+          prefetch={false}
         >
           <Image
             className="rounded-md border border-solid"
@@ -45,6 +46,7 @@ export default async function Home(props: {
           aria-disabled={isChoiceActive}
           tabIndex={isChoiceActive ? -1 : undefined}
           replace={true}
+          prefetch={false}
         >
           <Image
             className="dark:invert rotate-180 m-2 size-4"

@@ -3,11 +3,11 @@
   "choices": [
     {
       "name": "romantic",
-      "sceneSequence": "beginning"
+      "sceneSequenceName": "end"
     },
     {
       "name": "neutral",
-      "sceneSequence": "beginning"
+      "sceneSequenceName": "end"
     }
   ],
   "scenes": [

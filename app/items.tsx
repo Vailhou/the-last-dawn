@@ -15,16 +15,23 @@ export default function Items({ sceneSequenceName, isChoiceActive }: Items) {
     choiceName: string
   }
 
+  function test(testString: string) {
+    console.log("testString", testString)
+    return "/";
+  }
+
   function Item({ imgSrc, imgAlt, choiceName }: Item) {
     return (
       <Link
-        href={getItemLink("beginning", "romantic")}
-        // href={getItemLink("beginning", choiceName)}
+        // href={test("test")}
+        // href={getItemLink("beginning", "romantic")}
+        href={getItemLink("beginning", choiceName)}
         // href={getLink("beginning", 0, 0)}
         className={`${charm.className} ${!isChoiceActive ? "pointer-events-none" : ""} size-16 sm:size-24`}
         aria-disabled={!isChoiceActive}
         tabIndex={!isChoiceActive ? -1 : undefined}
         replace={true}
+        prefetch={false}
       >
         <Image
           src={imgSrc}

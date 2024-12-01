@@ -42,11 +42,11 @@ export function declareEachJSON(): SceneSequence[] {
     }
   })
 
-  console.log(typeList[0])
   return typeList;
 }
 
 function getSceneSequence(sceneSequenceName: string) {
+  console.log("getSceneSequence", sceneSequenceName)
   const sceneSequence = sceneSequences.find(
     (sceneSequence) => sceneSequence.name === sceneSequenceName
   );
@@ -111,10 +111,17 @@ export function getLink(sceneSequenceName: string, sceneIndex: number, textIndex
 }
 
 export function getItemLink(sceneSequenceName: string, itemType: string) {
+  console.log("sceneSequenceName", sceneSequenceName);
   const sceneSequence = getSceneSequence(sceneSequenceName);
   const choice = sceneSequence.choices.find((choice) => choice.name === itemType);
+  console.log("choice", choice)
+
   if (choice === undefined) {
     throw "Undefined choice";
   }
+  if (choice.sceneSequenceName === undefined) {
+    throw "Undefined choice.sceneSequenceName";
+  }
+
   return getLink(choice.sceneSequenceName, 0, 0);
 }

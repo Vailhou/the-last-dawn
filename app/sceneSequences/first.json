@@ -3,11 +3,11 @@
   "choices": [
     {
       "name": "violent",
-      "sceneSequence": "second"
+      "sceneSequenceName": "end"
     },
     {
       "name": "neutral",
-      "sceneSequence": "third"
+      "sceneSequenceName": "end"
     }
   ],
   "scenes": [
