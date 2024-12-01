@@ -16,7 +16,7 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "The Last Dawn",
-  description: "Visual novel",
+  description: "A visual novel about love and death",
 };
 
 export default function RootLayout({
