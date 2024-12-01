@@ -1,0 +1,34 @@
+{
+  "name": "beginning",
+  "choices": [
+    {
+      "name": "romantic",
+      "sceneSequenceName": "first"
+    },
+    {
+      "name": "violent",
+      "sceneSequenceName": "second"
+    },
+    {
+      "name": "neutral",
+      "sceneSequenceName": "third"
+    }
+  ],
+  "scenes": [
+    {
+      "image": "page-placeholder.png",
+      "texts": [
+        "First text here",
+        "Second text here",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      ]
+    },
+    {
+      "image": "page-placeholder2.png",
+      "texts": [
+        "2 First text here",
+        "2 Second text here"
+      ]
+    }
+  ]
+}

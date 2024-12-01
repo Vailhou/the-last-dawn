@@ -1,8 +1,60 @@
-import flow from "./flow.json"
+import beginning from "./sceneSequences/beginning.json";
 
 const imageFolder = "/sceneImages/";
-const currentSceneSequenceIndex = 0;
-const currentSceneSequence = flow.sceneSequences[currentSceneSequenceIndex];
+const currentSceneSequence = beginning;
+
+import * as fs from "fs";
+const readPath = "./app/sceneSequences/";
+const sceneSequences: SceneSequence[] = declareEachJSON();
+
+export const choiceName = {
+  romantic: "romantic",
+  violent: "violent",
+  neutral: "neutral"
+}
+
+type Choice = {
+  name: string
+  sceneSequenceName: string
+}
+
+type Scene = {
+  image: string
+  texts: string[]
+}
+
+type SceneSequence = {
+  name: string
+  choices: Choice[]
+  scenes: Scene[]
+}
+
+export function declareEachJSON(): SceneSequence[] {
+  const fileNames = fs.readdirSync(readPath).filter(file => file.match(/\.json$/));
+  const typeList: SceneSequence[] = [];
+
+  fileNames.forEach((fileName: string) => {
+    let typeName = fileName.match(/(^.*?)\.json/);
+    if (typeName) {
+      const sceneSequenceString = fs.readFileSync(readPath + fileName, "utf8");
+      const sceneSequenceObj = JSON.parse(sceneSequenceString);
+      typeList.push(sceneSequenceObj);
+    }
+  })
+
+  return typeList;
+}
+
+function getSceneSequence(sceneSequenceName: string) {
+  console.log("getSceneSequence", sceneSequenceName)
+  const sceneSequence = sceneSequences.find(
+    (sceneSequence) => sceneSequence.name === sceneSequenceName
+  );
+  if (sceneSequence === undefined) {
+    throw "Undefined scene sequence, name: " + sceneSequenceName;
+  }
+  return sceneSequence;
+}
 
 function getScene(sceneIndex: number) {
   return currentSceneSequence.scenes[sceneIndex];
@@ -17,10 +69,11 @@ export function getText(sceneIndex: number, textIndex: number) {
   return getScene(sceneIndex).texts[textIndex];
 }
 
-export function getLink(sceneIndex: number, textIndex: number, isChoiceActive: boolean) {
-  let nextTextIndex = textIndex;
+export function getLink(sceneSequenceName: string, sceneIndex: number, textIndex: number): string {
+  let sceneSequence = getSceneSequence(sceneSequenceName);
   let nextSceneIndex = sceneIndex;
-  let nextIsChoiceActive = isChoiceActive;
+  let nextTextIndex = textIndex;
+  let nextIsChoiceActive = false;
 
   // const endGame = () => {
   //   // TODO: Game ending
@@ -39,7 +92,7 @@ export function getLink(sceneIndex: number, textIndex: number, isChoiceActive: b
 
   function changeScene() {
     nextSceneIndex = sceneIndex + 1;
-    if (currentSceneSequence.scenes.length <= nextSceneIndex) {
+    if (sceneSequence.scenes.length <= nextSceneIndex) {
       nextSceneIndex = 0;
       nextIsChoiceActive = true;
     }
@@ -54,5 +107,21 @@ export function getLink(sceneIndex: number, textIndex: number, isChoiceActive: b
   };
 
   changeText(sceneIndex);
-  return `?text=${nextTextIndex}&scene=${nextSceneIndex}&choice=${nextIsChoiceActive}`
+  return `?text=${nextTextIndex}&scene=${nextSceneIndex}&choice=${nextIsChoiceActive}`;
+}
+
+export function getItemLink(sceneSequenceName: string, itemType: string) {
+  console.log("sceneSequenceName", sceneSequenceName);
+  const sceneSequence = getSceneSequence(sceneSequenceName);
+  const choice = sceneSequence.choices.find((choice) => choice.name === itemType);
+  console.log("choice", choice)
+
+  if (choice === undefined) {
+    throw "Undefined choice";
+  }
+  if (choice.sceneSequenceName === undefined) {
+    throw "Undefined choice.sceneSequenceName";
+  }
+
+  return getLink(choice.sceneSequenceName, 0, 0);
 }
