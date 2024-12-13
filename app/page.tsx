@@ -1,4 +1,4 @@
-import Choices from "./choices";
+import ChoicePanel from "./choicePanel";
 import Content from "./content";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
@@ -33,7 +33,7 @@ export default async function Home(props: {
         textIndex={textIndex}
         isChoiceActive={isChoiceActive}
       />
-      <Choices
+      <ChoicePanel
         sceneSequenceName={sceneSequenceName}
         isChoiceActive={isChoiceActive}
       />

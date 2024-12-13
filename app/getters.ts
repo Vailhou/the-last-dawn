@@ -6,7 +6,7 @@ const readPath = "./app/sceneSequences/";
 const imageFolder = "/sceneImages/";
 const sceneSequences: SceneSequence[] = declareEachJSON();
 
-type Choice = {
+export type Choice = {
   name: string
   sceneSequenceName: string
 }
