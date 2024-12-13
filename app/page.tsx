@@ -1,4 +1,4 @@
-import Items from "./items";
+import Choices from "./choices";
 import Content from "./content";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
@@ -33,7 +33,7 @@ export default async function Home(props: {
         textIndex={textIndex}
         isChoiceActive={isChoiceActive}
       />
-      <Items
+      <Choices
         sceneSequenceName={sceneSequenceName}
         isChoiceActive={isChoiceActive}
       />
