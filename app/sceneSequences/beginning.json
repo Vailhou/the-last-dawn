@@ -16,7 +16,7 @@
   ],
   "scenes": [
     {
-      "image": "page-placeholder.png",
+      "image": "beginning1.png",
       "texts": [
         "First text here",
         "Second text here",
@@ -24,7 +24,7 @@
       ]
     },
     {
-      "image": "page-placeholder2.png",
+      "image": "beginning2.png",
       "texts": [
         "2 First text here",
         "2 Second text here"

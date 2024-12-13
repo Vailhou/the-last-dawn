@@ -1,12 +1,10 @@
 "use server"
 
-import beginning from "./sceneSequences/beginning.json";
 import * as fs from "fs";
 
 const readPath = "./app/sceneSequences/";
 const imageFolder = "/sceneImages/";
 const sceneSequences: SceneSequence[] = declareEachJSON();
-const currentSceneSequence = beginning;
 
 type Choice = {
   name: string
@@ -36,7 +34,6 @@ function declareEachJSON(): SceneSequence[] {
       typeList.push(sceneSequenceObj);
     }
   })
-
   return typeList;
 }
 
@@ -45,75 +42,93 @@ function getSceneSequence(sceneSequenceName: string) {
     (sceneSequence) => sceneSequence.name === sceneSequenceName
   );
   if (sceneSequence === undefined) {
-    throw "Undefined scene sequence, name: " + sceneSequenceName;
+    throw "Undefined scene sequence: " + sceneSequenceName;
   }
   return sceneSequence;
 }
 
-function getScene(sceneIndex: number) {
-  return currentSceneSequence.scenes[sceneIndex];
+function getScene(sceneSequenceName: string, sceneIndex: number) {
+  const sceneSequence = getSceneSequence(sceneSequenceName);
+  const scene = sceneSequence.scenes[sceneIndex];
+  if (scene === undefined) {
+    throw "Undefined scene: " + sceneSequenceName + " " + scene;
+  }
+  return scene;
 }
 
-export async function getImgSrc(sceneIndex: number) {
-  const imageName = getScene(sceneIndex).image;
+function getNextTextIndex(sceneSequenceName: string, sceneIndex: number, textIndex: number) {
+  const nextTextIndex = textIndex + 1;
+
+  if (getScene(sceneSequenceName, sceneIndex).texts.length <= nextTextIndex) {
+    return 0;
+  }
+  return nextTextIndex;
+};
+
+function getNextSceneIndex(currentSceneSequenceName: string, currentSceneIndex: number) {
+  const sceneSequence = getSceneSequence(currentSceneSequenceName);
+  if (sceneSequence.scenes.length < currentSceneIndex + 1) {
+    return 0;
+  }
+  return currentSceneIndex + 1;
+}
+
+function getNextIsChoiceActive(sceneSequenceName: string, sceneIndex: number, textIndex: number): boolean {
+  const sceneSequence = getSceneSequence(sceneSequenceName);
+  const scene = sceneSequence.scenes[sceneIndex];
+  // Next choice will be active when current scene is last and current text is next to last 
+  if (sceneIndex === sceneSequence.scenes.length - 1 && textIndex === scene.texts.length - 2) {
+    return true;
+  }
+  return false;
+}
+
+export async function getText(sceneSequenceName: string, sceneIndex: number, textIndex: number) {
+  return getScene(sceneSequenceName, sceneIndex).texts[textIndex];
+}
+
+export async function getChoices(sceneSequenceName: string) {
+  return getSceneSequence(sceneSequenceName).choices;
+}
+
+export async function getImgSrc(sceneSequenceName: string, sceneIndex: number) {
+  const imageName = getScene(sceneSequenceName, sceneIndex).image;
   return imageFolder + imageName;
 }
 
-export async function getText(sceneIndex: number, textIndex: number) {
-  return getScene(sceneIndex).texts[textIndex];
-}
-
-export async function getLink(sceneSequenceName: string, sceneIndex: number, textIndex: number): Promise<string> {
-  const sceneSequence = getSceneSequence(sceneSequenceName);
-  let nextSceneIndex = sceneIndex;
-  let nextTextIndex = textIndex;
-  let nextIsChoiceActive = false;
-
-  // const endGame = () => {
-  //   // TODO: Game ending
-  // }
-
-  // const changeSceneSequence = () => {
-  //   currentSceneSequenceIndex = currentSceneSequenceIndex + 1;
-  //   if (flow.sceneSequences.length > currentSceneSequenceIndex) {
-  //     currentSceneSequence = flow.sceneSequences[currentSceneSequenceIndex];
-  //     setSceneIndex(0);
-  //     setTextIndex(0);
-  //   } else {
-  //     endGame();
-  //   }
-  // }
-
-  function changeScene() {
-    nextSceneIndex = sceneIndex + 1;
-    if (sceneSequence.scenes.length <= nextSceneIndex) {
-      nextSceneIndex = 0;
-      nextIsChoiceActive = true;
-    }
+export async function getNextLink(
+  sceneSequenceName: string,
+  sceneIndex: number,
+  textIndex: number,
+  isChoiceActive: boolean
+): Promise<string> {
+  if (sceneSequenceName === "end") {
+    return `?sequence=${sceneSequenceName}&scene=${sceneIndex}&text=${textIndex}&choice=${isChoiceActive}`;
   }
 
-  function changeText(sceneIndex: number) {
-    nextTextIndex = textIndex + 1;
-    if (getScene(sceneIndex).texts.length <= nextTextIndex) {
-      nextTextIndex = 0;
-      changeScene();
-    }
-  };
+  if (isChoiceActive) {
+    return `?sequence=${sceneSequenceName}&scene=${sceneIndex}&text=${textIndex}&choice=${isChoiceActive}`;
+  }
 
-  changeText(sceneIndex);
-  return `?text=${nextTextIndex}&scene=${nextSceneIndex}&choice=${nextIsChoiceActive}`;
+  const nextTextIndex = getNextTextIndex(sceneSequenceName, sceneIndex, textIndex)
+  const nextSceneIndex = getNextSceneIndex(sceneSequenceName, sceneIndex);
+  const nextIsChoiceActive = getNextIsChoiceActive(sceneSequenceName, sceneIndex, textIndex)
+
+  if (nextTextIndex === 0) {
+    return `?sequence=${sceneSequenceName}&scene=${nextSceneIndex}&text=${nextTextIndex}&choice=${nextIsChoiceActive}`;
+  }
+  return `?sequence=${sceneSequenceName}&scene=${sceneIndex}&text=${nextTextIndex}&choice=${nextIsChoiceActive}`;
 }
 
-export async function getItemLink(sceneSequenceName: string, itemType: string) {
+export async function getSceneSequenceLink(sceneSequenceName: string, itemType: string) {
   const sceneSequence = getSceneSequence(sceneSequenceName);
   const choice = sceneSequence.choices.find((choice) => choice.name === itemType);
 
   if (choice === undefined) {
-    throw "Undefined choice";
+    throw "Undefined choice. Tried to find " + itemType;
   }
   if (choice.sceneSequenceName === undefined) {
     throw "Undefined choice.sceneSequenceName";
   }
-
-  return getLink(choice.sceneSequenceName, 0, 0);
+  return getNextLink(choice.sceneSequenceName, 0, 0, false);
 }
