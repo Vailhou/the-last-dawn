@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { charm } from "./fonts/fonts";
-import { Choice, getChoices, getSceneSequenceLink } from "./getters";
 
 type ChoiceItem = {
   imgSrc: string
