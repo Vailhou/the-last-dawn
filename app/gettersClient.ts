@@ -4,16 +4,6 @@ import { SceneSequence, SearchParams } from "./types";
 
 const imageFolder = "/sceneImages/";
 
-// function getSceneSequence(sceneSequenceName: string) {
-//   const sceneSequence = sceneSequences.find(
-//     (sceneSequence) => sceneSequence.name === sceneSequenceName
-//   );
-//   if (sceneSequence === undefined) {
-//     throw "Undefined scene sequence: " + sceneSequenceName;
-//   }
-//   return sceneSequence;
-// }
-
 function getSceneSequence(searchParams: SearchParams, sceneSequences: SceneSequence[]) {
   const sceneSequence = sceneSequences.find(
     (sceneSequence) => sceneSequence.name === searchParams.sceneSequenceName
@@ -69,6 +59,11 @@ export function getImgSrc(searchParams: SearchParams, sceneSequences: SceneSeque
   return imageFolder + imageName;
 }
 
+export function getChoices(searchParams: SearchParams, sceneSequences: SceneSequence[]) {
+  const sceneSequence = getSceneSequence(searchParams, sceneSequences);
+  return sceneSequence.choices;
+}
+
 export function getNextLink(searchParams: SearchParams, sceneSequences: SceneSequence[]) {
   if (searchParams.sceneSequenceName === "end") {
     return `?sequence=${searchParams.sceneSequenceName}&scene=${searchParams.sceneSequenceName}&text=${searchParams.textIndex}&choice=${searchParams.isChoiceActive}`;
@@ -88,14 +83,23 @@ export function getNextLink(searchParams: SearchParams, sceneSequences: SceneSeq
   return `?sequence=${searchParams.sceneSequenceName}&scene=${searchParams.sceneIndex}&text=${nextTextIndex}&choice=${nextIsChoiceActive}`;
 }
 
-// export function getSceneSequenceLink(sceneSequence: SceneSequence, itemType: string) {
-//   const choice = sceneSequence.choices.find((choice) => choice.name === itemType);
-
-//   if (choice === undefined) {
-//     throw "Undefined choice. Tried to find " + itemType;
-//   }
-//   if (choice.sceneSequenceName === undefined) {
-//     throw "Undefined choice.sceneSequenceName";
-//   }
-//   return getNextLink(choice.sceneSequenceName, 0, 0, false);
-// }
+export function getSceneSequenceLink(searchParams: SearchParams, sceneSequences: SceneSequence[], choiceName: string) {
+  if (searchParams.sceneSequenceName === "end") {
+    return `?sequence=${searchParams.sceneSequenceName}&scene=${searchParams.sceneSequenceName}&text=${searchParams.textIndex}&choice=${searchParams.isChoiceActive}`;
+  }
+  const sceneSequence = getSceneSequence(searchParams, sceneSequences);
+  const choice = sceneSequence.choices.find((choice) => choice.name === choiceName);
+  if (choice === undefined) {
+    throw "Undefined choice. Tried to find " + choiceName;
+  }
+  if (choice.sceneSequenceName === undefined) {
+    throw "Undefined choice.sceneSequenceName";
+  }
+  const nextSearchParams = {
+    sceneSequenceName: choice.sceneSequenceName,
+    sceneIndex: 0,
+    textIndex: 0,
+    isChoiceActive: false // TODO Check if this could be getNextIsChoiceActive(searchParams, sceneSequences)
+  }
+  return getNextLink(nextSearchParams, sceneSequences);
+}

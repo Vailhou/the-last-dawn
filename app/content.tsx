@@ -16,11 +16,18 @@ type Content = {
 }
 
 export default function Content() {
-  // const link = use(getNextLink(sceneSequenceName, sceneIndex, textIndex, isChoiceActive));
   const searchParamsPromise = useSearchParamsContext()
   const searchParams = use(searchParamsPromise)
   const sceneSequencesPromise = usesceneSequencesContext()
   const sceneSequences = use(sceneSequencesPromise)
+
+  if (searchParams.sceneSequenceName === "end") {
+    return (
+      <div className="flex flex-grow flex-col gap-8 justify-center items-center h-full w-full">
+        <p>Endscreen</p>
+      </div>
+    )
+  }
 
   const link = getNextLink(searchParams, sceneSequences);
   const imgSrc = getImgSrc(searchParams, sceneSequences);
@@ -33,6 +40,7 @@ export default function Content() {
         aria-disabled={searchParams.isChoiceActive}
         tabIndex={searchParams.isChoiceActive ? -1 : undefined}
         replace={true}
+        prefetch={false}
       >
         <Image
           className="rounded-md border border-solid"
@@ -49,6 +57,7 @@ export default function Content() {
         aria-disabled={searchParams.isChoiceActive}
         tabIndex={searchParams.isChoiceActive ? -1 : undefined}
         replace={true}
+        prefetch={false}
       >
         <Image
           className="dark:invert rotate-180 m-2 size-4"
