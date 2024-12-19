@@ -68,15 +68,12 @@ export function getNextLink(searchParams: SearchParams, sceneSequences: SceneSeq
   if (searchParams.sceneSequenceName === "end") {
     return `?sequence=${searchParams.sceneSequenceName}&scene=${searchParams.sceneSequenceName}&text=${searchParams.textIndex}&choice=${searchParams.isChoiceActive}`;
   }
-
   if (searchParams.isChoiceActive) {
     return `?sequence=${searchParams.sceneSequenceName}&scene=${searchParams.sceneIndex}&text=${searchParams.textIndex}&choice=${searchParams.isChoiceActive}`;
   }
-
   const nextTextIndex = getNextTextIndex(searchParams, sceneSequences)
   const nextSceneIndex = getNextSceneIndex(searchParams, sceneSequences);
   const nextIsChoiceActive = getNextIsChoiceActive(searchParams, sceneSequences)
-
   if (nextTextIndex === 0) {
     return `?sequence=${searchParams.sceneSequenceName}&scene=${nextSceneIndex}&text=${nextTextIndex}&choice=${nextIsChoiceActive}`;
   }

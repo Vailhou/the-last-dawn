@@ -19,7 +19,6 @@ export default async function Home(props: {
   const sceneSequencePromise = getSceneSequences().then((sceneSequences) => (
     sceneSequences
   ));
-
   return (
     <main className="flex flex-grow flex-col sm:flex-row gap-8 justify-between items-center h-full w-full">
       <SearchParamsProvider searchParamsPromise={searchParamsPromise}>
