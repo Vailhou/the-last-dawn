@@ -3,11 +3,12 @@
 import * as fs from "fs";
 import { SceneSequence } from "./types";
 
-const readPath = "./app/sceneSequences/";
+const readPath = "./public/sceneSequences/";
 
 // Get SceneSequence[] from multiple json files.
 export async function getSceneSequences(): Promise<SceneSequence[]> {
   const fileNames = fs.readdirSync(readPath).filter(file => file.match(/\.json$/));
+  console.log(fileNames);
   const typeList: SceneSequence[] = [];
 
   fileNames.forEach((fileName: string) => {

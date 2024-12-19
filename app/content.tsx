@@ -20,7 +20,6 @@ export default function Content() {
   const searchParams = use(searchParamsPromise)
   const sceneSequencesPromise = usesceneSequencesContext()
   const sceneSequences = use(sceneSequencesPromise)
-
   if (searchParams.sceneSequenceName === "end") {
     return (
       <div className="flex flex-grow flex-col gap-8 justify-center items-center h-full w-full">
@@ -28,10 +27,8 @@ export default function Content() {
       </div>
     )
   }
-
   const link = getNextLink(searchParams, sceneSequences);
   const imgSrc = getImgSrc(searchParams, sceneSequences);
-
   return (
     <div className="flex flex-grow flex-col gap-8 justify-center items-center h-full w-full">
       <Link
