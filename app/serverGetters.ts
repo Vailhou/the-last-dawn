@@ -9,7 +9,6 @@ const jsonFilesPath = "/app/sceneSequences/";
 export async function getSceneSequences(): Promise<SceneSequence[]> {
   const path = process.cwd() + jsonFilesPath;
   const fileNames = fs.readdirSync(path).filter(file => file.match(/\.json$/));
-  console.log(fileNames);
   const typeList: SceneSequence[] = [];
 
   fileNames.forEach((fileName: string) => {

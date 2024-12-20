@@ -1,6 +1,6 @@
 import ChoicePanel from "./choicePanel";
 import Content from "./content";
-import { getSceneSequences } from "./gettersServer";
+import { getSceneSequences } from "./serverGetters";
 import { SceneSequencesProvider } from "./sceneSequenceContext";
 import { SearchParamsProvider } from "./searchParamsContext";
 import { RawSearchParams, SearchParams } from "./types";

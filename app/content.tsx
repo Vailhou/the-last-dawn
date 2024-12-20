@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { charm } from "./fonts/fonts";
-import { getImgSrc, getNextLink, getText } from "./gettersClient";
+import { getImgSrc, getNextLink, getText } from "./clientGetters";
 import { use } from "react";
 import { useSearchParamsContext } from "./searchParamsContext";
 import { usesceneSequencesContext } from "./sceneSequenceContext";
@@ -23,7 +23,20 @@ export default function Content() {
   if (searchParams.sceneSequenceName === "end") {
     return (
       <div className="flex flex-grow flex-col gap-8 justify-center items-center h-full w-full">
-        <p>Endscreen</p>
+        <p className={charm.className + " text-xl sm:text-4xl"}>
+          The end
+        </p>
+        <Link
+          // TODO: choice=false does not work if the story starts with a choice.
+          href={`?sequence=${"beginning"}&scene=${0}&text=${0}&choice=${false}`}
+          className={`${charm.className} ${searchParams.isChoiceActive ? "pointer-events-none" : ""} rounded-md border border-solid border-transparent text-center transition-colors bg-foreground text-background hover:bg-[#383838] dark:hover:bg-[#ccc] text-xl sm:text-4xl h-auto w-auto px-2 sm:px-5 p-5`}
+          aria-disabled={searchParams.isChoiceActive}
+          tabIndex={searchParams.isChoiceActive ? -1 : undefined}
+          replace={true}
+          prefetch={true}
+        >
+          Back to beginning
+        </Link>
       </div>
     )
   }
@@ -37,7 +50,7 @@ export default function Content() {
         aria-disabled={searchParams.isChoiceActive}
         tabIndex={searchParams.isChoiceActive ? -1 : undefined}
         replace={true}
-        prefetch={false}
+        prefetch={true}
       >
         <Image
           className="rounded-md border border-solid"
@@ -54,7 +67,7 @@ export default function Content() {
         aria-disabled={searchParams.isChoiceActive}
         tabIndex={searchParams.isChoiceActive ? -1 : undefined}
         replace={true}
-        prefetch={false}
+        prefetch={true}
       >
         <Image
           className="dark:invert rotate-180 m-2 size-4"

@@ -6,7 +6,7 @@ import { charm } from "./fonts/fonts";
 import { useSearchParamsContext } from "./searchParamsContext";
 import { use } from "react";
 import { usesceneSequencesContext } from "./sceneSequenceContext";
-import { getChoices, getSceneSequenceLink } from "./gettersClient";
+import { getChoices, getSceneSequenceLink } from "./clientGetters";
 import { SceneSequence, SearchParams } from "./types";
 
 type ChoiceItem = {
@@ -27,7 +27,7 @@ function ChoiceItem({ searchParams, sceneSequences, imgSrc, imgAlt, choiceName }
         aria-disabled={!searchParams.isChoiceActive}
         tabIndex={!searchParams.isChoiceActive ? -1 : undefined}
         replace={true}
-        prefetch={false}
+        prefetch={true}
       >
         <Image
           src={imgSrc}
