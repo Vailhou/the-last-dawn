@@ -18,16 +18,16 @@
     {
       "image": "beginning1.png",
       "texts": [
-        "First text here",
-        "Second text here",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
+        "Curabitur mattis ex molestie ex convallis, sit amet consequat diam pulvinar.",
+        "Etiam finibus quis lorem sit amet vehicula."
       ]
     },
     {
       "image": "beginning2.png",
       "texts": [
-        "2 First text here",
-        "2 Second text here"
+        "Sed rutrum iaculis ligula, vitae venenatis justo pulvinar id.",
+        "Donec vestibulum pellentesque tellus, ut vestibulum lacus lobortis vel."
       ]
     }
   ]

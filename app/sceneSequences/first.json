@@ -3,27 +3,27 @@
   "choices": [
     {
       "name": "violent",
-      "sceneSequenceName": "end"
+      "sceneSequenceName": "last"
     },
     {
       "name": "neutral",
-      "sceneSequenceName": "end"
+      "sceneSequenceName": "last"
     }
   ],
   "scenes": [
     {
       "image": "first1.png",
       "texts": [
-        "First text here",
-        "Second text here",
-        "Ut eget odio sagittis, faucibus tortor sit amet, pretium velit."
+        "Proin ac accumsan lorem.",
+        "Donec vitae justo dignissim, suscipit urna sed, efficitur mauris.",
+        "In ut cursus eros."
       ]
     },
     {
       "image": "first2.png",
       "texts": [
-        "2 First text here",
-        "2 Second text here"
+        "Praesent non arcu consequat, vehicula arcu eget, varius lorem.",
+        "Etiam non ipsum sed est porta finibus eu at libero."
       ]
     }
   ]

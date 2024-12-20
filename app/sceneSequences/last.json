@@ -1,0 +1,14 @@
+{
+  "name": "last",
+  "choices": [
+  ],
+  "scenes": [
+    {
+      "image": "last1.png",
+      "texts": [
+        "Aenean dignissim leo id mauris condimentum tincidunt.",
+        "Etiam id faucibus dui, in tempus risus."
+      ]
+    }
+  ]
+}

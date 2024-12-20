@@ -14,6 +14,11 @@ function getSceneSequence(searchParams: SearchParams, sceneSequences: SceneSeque
   return sceneSequence;
 }
 
+function getIsLastSceneSequence(searchParams: SearchParams, sceneSequences: SceneSequence[]) {
+  const sceneSequence = getSceneSequence(searchParams, sceneSequences);
+  return (sceneSequence.choices.length === 0)
+}
+
 function getScene(searchParams: SearchParams, sceneSequences: SceneSequence[]) {
   const sceneSequence = getSceneSequence(searchParams, sceneSequences);
   const scene = sceneSequence.scenes[searchParams.sceneIndex];
@@ -40,10 +45,23 @@ function getNextSceneIndex(searchParams: SearchParams, sceneSequences: SceneSequ
 }
 
 function getNextIsChoiceActive(searchParams: SearchParams, sceneSequences: SceneSequence[]): boolean {
+  if (getIsLastSceneSequence(searchParams, sceneSequences)) {
+    return false;
+  }
   const sceneSequence = getSceneSequence(searchParams, sceneSequences);
   const scene = sceneSequence.scenes[searchParams.sceneIndex];
   // Next choice will be active when current scene is last and current text is next to last 
   if (searchParams.sceneIndex === sceneSequence.scenes.length - 1 && searchParams.textIndex === scene.texts.length - 2) {
+    return true;
+  }
+  return false;
+}
+
+function getNextIsEndOfSceneSequence(searchParams: SearchParams, sceneSequences: SceneSequence[]): boolean {
+  const sceneSequence = getSceneSequence(searchParams, sceneSequences);
+  const scene = sceneSequence.scenes[searchParams.sceneIndex];
+  // Next choice will be active when current scene is last and current text is next to last 
+  if (searchParams.sceneIndex === sceneSequence.scenes.length - 1 && searchParams.textIndex === scene.texts.length - 1) {
     return true;
   }
   return false;
@@ -65,15 +83,16 @@ export function getChoices(searchParams: SearchParams, sceneSequences: SceneSequ
 }
 
 export function getNextLink(searchParams: SearchParams, sceneSequences: SceneSequence[]) {
-  if (searchParams.sceneSequenceName === "end") {
-    return `?sequence=${searchParams.sceneSequenceName}&scene=${searchParams.sceneSequenceName}&text=${searchParams.textIndex}&choice=${searchParams.isChoiceActive}`;
-  }
-  if (searchParams.isChoiceActive) {
+  if (searchParams.sceneSequenceName === "end" || searchParams.isChoiceActive) {
+    // Return link to self when in a state where the link won't be clicked.
     return `?sequence=${searchParams.sceneSequenceName}&scene=${searchParams.sceneIndex}&text=${searchParams.textIndex}&choice=${searchParams.isChoiceActive}`;
   }
   const nextTextIndex = getNextTextIndex(searchParams, sceneSequences)
   const nextSceneIndex = getNextSceneIndex(searchParams, sceneSequences);
   const nextIsChoiceActive = getNextIsChoiceActive(searchParams, sceneSequences)
+  if (getNextIsEndOfSceneSequence(searchParams, sceneSequences) && getIsLastSceneSequence(searchParams, sceneSequences)) {
+    return `?sequence=${"end"}&scene=${0}&text=${0}&choice=${false}`;
+  }
   if (nextTextIndex === 0) {
     return `?sequence=${searchParams.sceneSequenceName}&scene=${nextSceneIndex}&text=${nextTextIndex}&choice=${nextIsChoiceActive}`;
   }
@@ -92,11 +111,5 @@ export function getSceneSequenceLink(searchParams: SearchParams, sceneSequences:
   if (choice.sceneSequenceName === undefined) {
     throw "Undefined choice.sceneSequenceName";
   }
-  const nextSearchParams = {
-    sceneSequenceName: choice.sceneSequenceName,
-    sceneIndex: 0,
-    textIndex: 0,
-    isChoiceActive: false // TODO Check if this could be getNextIsChoiceActive(searchParams, sceneSequences)
-  }
-  return getNextLink(nextSearchParams, sceneSequences);
+  return `?sequence=${choice.sceneSequenceName}&scene=${0}&text=${0}&choice=${false}`;
 }
