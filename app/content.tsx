@@ -58,7 +58,7 @@ export default function Content() {
           alt="Story page"
           width={500}
           height={300}
-          priority
+          priority={true}
         />
       </Link>
       <Link
@@ -75,6 +75,7 @@ export default function Content() {
           alt="Triangle"
           width={16}
           height={16}
+          priority={true}
         />
         {getText(searchParams, sceneSequences)}
       </Link>

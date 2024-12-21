@@ -35,6 +35,7 @@ function ChoiceItem({ searchParams, sceneSequences, imgSrc, imgAlt, choiceName }
           height={128}
           className="rounded-full border border-solid"
           alt={imgAlt}
+          priority={true}
         />
       </Link>
     </>
