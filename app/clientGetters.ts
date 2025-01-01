@@ -82,26 +82,60 @@ export function getChoices(searchParams: SearchParams, sceneSequences: SceneSequ
   return sceneSequence.choices;
 }
 
+function formLink(sceneSequenceName: string, sceneIndex: number, textIndex: number, isChoiceActive: boolean) {
+  return (
+    "?sequence=" + sceneSequenceName +
+    "&scene=" + sceneIndex +
+    "&text=" + textIndex +
+    "&choice=" + isChoiceActive
+  );
+}
+
 export function getNextLink(searchParams: SearchParams, sceneSequences: SceneSequence[]) {
   if (searchParams.sceneSequenceName === "end" || searchParams.isChoiceActive) {
     // Return link to self when in a state where the link won't be clicked.
-    return `?sequence=${searchParams.sceneSequenceName}&scene=${searchParams.sceneIndex}&text=${searchParams.textIndex}&choice=${searchParams.isChoiceActive}`;
+    return formLink(
+      searchParams.sceneSequenceName,
+      searchParams.sceneIndex,
+      searchParams.textIndex,
+      searchParams.isChoiceActive
+    );
   }
   const nextTextIndex = getNextTextIndex(searchParams, sceneSequences)
   const nextSceneIndex = getNextSceneIndex(searchParams, sceneSequences);
   const nextIsChoiceActive = getNextIsChoiceActive(searchParams, sceneSequences)
   if (getNextIsEndOfSceneSequence(searchParams, sceneSequences) && getIsLastSceneSequence(searchParams, sceneSequences)) {
-    return `?sequence=${"end"}&scene=${0}&text=${0}&choice=${false}`;
+    return formLink(
+      "end",
+      0,
+      0,
+      false
+    );
   }
   if (nextTextIndex === 0) {
-    return `?sequence=${searchParams.sceneSequenceName}&scene=${nextSceneIndex}&text=${nextTextIndex}&choice=${nextIsChoiceActive}`;
+    return formLink(
+      searchParams.sceneSequenceName,
+      nextSceneIndex,
+      nextTextIndex,
+      nextIsChoiceActive
+    );
   }
-  return `?sequence=${searchParams.sceneSequenceName}&scene=${searchParams.sceneIndex}&text=${nextTextIndex}&choice=${nextIsChoiceActive}`;
+  return formLink(
+    searchParams.sceneSequenceName,
+    searchParams.sceneIndex,
+    nextTextIndex,
+    nextIsChoiceActive
+  );
 }
 
 export function getSceneSequenceLink(searchParams: SearchParams, sceneSequences: SceneSequence[], choiceName: string) {
   if (searchParams.sceneSequenceName === "end") {
-    return `?sequence=${searchParams.sceneSequenceName}&scene=${searchParams.sceneSequenceName}&text=${searchParams.textIndex}&choice=${searchParams.isChoiceActive}`;
+    formLink(
+      searchParams.sceneSequenceName,
+      searchParams.sceneIndex,
+      searchParams.textIndex,
+      searchParams.isChoiceActive
+    );
   }
   const sceneSequence = getSceneSequence(searchParams, sceneSequences);
   const choice = sceneSequence.choices.find((choice) => choice.name === choiceName);
@@ -111,5 +145,10 @@ export function getSceneSequenceLink(searchParams: SearchParams, sceneSequences:
   if (choice.sceneSequenceName === undefined) {
     throw "Undefined choice.sceneSequenceName";
   }
-  return `?sequence=${choice.sceneSequenceName}&scene=${0}&text=${0}&choice=${false}`;
+  return formLink(
+    choice.sceneSequenceName,
+    0,
+    0,
+    false
+  );
 }
