@@ -27,3 +27,8 @@ export type SearchParams = {
   textIndex: number
   isChoiceActive: boolean
 }
+
+export type AsyncParams = {
+  searchParams: SearchParams
+  sceneSequences: SceneSequence[]
+}

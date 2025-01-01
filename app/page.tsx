@@ -1,32 +1,44 @@
 import ChoicePanel from "./choicePanel";
 import Content from "./content";
 import { getSceneSequences } from "./serverGetters";
-import { SceneSequencesProvider } from "./sceneSequenceContext";
-import { SearchParamsProvider } from "./searchParamsContext";
-import { RawSearchParams, SearchParams } from "./types";
+import { AsyncParams, RawSearchParams, SceneSequence, SearchParams } from "./types";
+import { AsyncParamsProvider } from "./asyncParamsContext";
 
 export default async function Home(props: {
   searchParams: Promise<RawSearchParams>,
 }) {
-  const searchParamsPromise: Promise<SearchParams> = props.searchParams.then((searchParams) => {
-    return {
-      sceneSequenceName: String(searchParams.sequence || "beginning"),
-      sceneIndex: Number(searchParams.scene || "0"),
-      textIndex: Number(searchParams.text || "0"),
-      isChoiceActive: ("true" === (searchParams.choice || "false"))
+  let searchParams: SearchParams = {
+    sceneSequenceName: "",
+    sceneIndex: -1,
+    textIndex: -1,
+    isChoiceActive: false
+  }
+  let sceneSequences: SceneSequence[] = [];
+
+  const asyncParamsPromise: Promise<AsyncParams> = props.searchParams.then((rawSearchParams) => {
+    searchParams = {
+      sceneSequenceName: String(rawSearchParams.sequence || "beginning"),
+      sceneIndex: Number(rawSearchParams.scene || "0"),
+      textIndex: Number(rawSearchParams.text || "0"),
+      isChoiceActive: "true" === (rawSearchParams.choice || "false")
     }
-  });
-  const sceneSequencePromise = getSceneSequences().then((sceneSequences) => (
-    sceneSequences
-  ));
+  }).then(() => {
+    getSceneSequences().then((sequences) => {
+      sceneSequences = sequences;
+    })
+  }).then(() => {
+    return {
+      searchParams: searchParams,
+      sceneSequences: sceneSequences
+    }
+  })
+
   return (
     <main className="flex flex-grow flex-col sm:flex-row gap-8 justify-between items-center h-full w-full">
-      <SearchParamsProvider searchParamsPromise={searchParamsPromise}>
-        <SceneSequencesProvider sceneSequencesPromise={sceneSequencePromise}>
-          <Content />
-          <ChoicePanel />
-        </SceneSequencesProvider>
-      </SearchParamsProvider>
+      <AsyncParamsProvider asyncParamsPromise={asyncParamsPromise}>
+        <Content />
+        <ChoicePanel />
+      </AsyncParamsProvider>
     </main>
   );
 }

@@ -5,8 +5,7 @@ import Image from "next/image";
 import { charm } from "./fonts/fonts";
 import { getImgSrc, getNextLink, getText } from "./clientGetters";
 import { use } from "react";
-import { useSearchParamsContext } from "./searchParamsContext";
-import { usesceneSequencesContext } from "./sceneSequenceContext";
+import { useAsyncParamsContext } from "./asyncParamsContext";
 
 type Content = {
   sceneSequenceName: string
@@ -16,10 +15,9 @@ type Content = {
 }
 
 export default function Content() {
-  const searchParamsPromise = useSearchParamsContext()
-  const searchParams = use(searchParamsPromise)
-  const sceneSequencesPromise = usesceneSequencesContext()
-  const sceneSequences = use(sceneSequencesPromise)
+  const asyncParams = use(useAsyncParamsContext());
+  const searchParams = asyncParams.searchParams;
+  const sceneSequences = asyncParams.sceneSequences;
   if (searchParams.sceneSequenceName === "end") {
     return (
       <div className="flex flex-grow flex-col gap-8 justify-center items-center h-full w-full">
@@ -59,6 +57,9 @@ export default function Content() {
           width={500}
           height={300}
           priority={true}
+          placeholder="blur"
+          blurDataURL={imgSrc}
+          quality={50}
         />
       </Link>
       <Link
@@ -76,6 +77,7 @@ export default function Content() {
           width={16}
           height={16}
           priority={true}
+          quality={50}
         />
         {getText(searchParams, sceneSequences)}
       </Link>

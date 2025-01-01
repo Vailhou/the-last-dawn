@@ -3,9 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { charm } from "./fonts/fonts";
-import { useSearchParamsContext } from "./searchParamsContext";
+import { useAsyncParamsContext } from "./asyncParamsContext";
 import { use } from "react";
-import { usesceneSequencesContext } from "./sceneSequenceContext";
 import { getChoices, getSceneSequenceLink } from "./clientGetters";
 import { SceneSequence, SearchParams } from "./types";
 
@@ -36,6 +35,9 @@ function ChoiceItem({ searchParams, sceneSequences, imgSrc, imgAlt, choiceName }
           className="rounded-full border border-solid"
           alt={imgAlt}
           priority={true}
+          placeholder="blur"
+          blurDataURL={imgSrc}
+          quality={50}
         />
       </Link>
     </>
@@ -91,10 +93,9 @@ function getChoiceItems(searchParams: SearchParams, sceneSequences: SceneSequenc
 }
 
 export default function ChoicePanel() {
-  const searchParamsPromise = useSearchParamsContext()
-  const searchParams = use(searchParamsPromise)
-  const sceneSequencesPromise = usesceneSequencesContext()
-  const sceneSequences = use(sceneSequencesPromise)
+  const asyncParams = use(useAsyncParamsContext());
+  const searchParams = asyncParams.searchParams;
+  const sceneSequences = asyncParams.sceneSequences;
   if (searchParams.sceneSequenceName === "end") {
     return (
       <></>
