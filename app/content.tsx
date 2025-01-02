@@ -41,6 +41,7 @@ export default function Content() {
   const link = getNextLink(searchParams, sceneSequences);
   const imgSrc = getImgSrc(searchParams, sceneSequences);
   const imgPlaceholder = getImgPlaceholder(searchParams, sceneSequences);
+  console.log(imgPlaceholder)
 
   return (
     <div className="flex flex-grow flex-col gap-8 justify-center items-center h-full w-full">
@@ -61,7 +62,7 @@ export default function Content() {
           priority={true}
           placeholder="blur"
           blurDataURL={imgPlaceholder}
-          quality={50}
+          // quality={50}
         />
       </Link>
       <Link

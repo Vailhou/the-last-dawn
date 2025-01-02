@@ -5,7 +5,7 @@ import Link from "next/link";
 import { charm } from "./fonts/fonts";
 import { useAsyncParamsContext } from "./asyncParamsContext";
 import { use } from "react";
-import { getChoices, getImgPlaceholder, getSceneSequenceLink } from "./clientGetters";
+import { getChoices, getSceneSequenceLink } from "./clientGetters";
 import { SceneSequence, SearchParams } from "./types";
 
 type ChoiceItem = {
@@ -18,7 +18,6 @@ type ChoiceItem = {
 
 function ChoiceItem({ searchParams, sceneSequences, imgSrc, imgAlt, choiceName }: ChoiceItem) {
   const link = getSceneSequenceLink(searchParams, sceneSequences, choiceName);
-  const imgPlaceholder = getImgPlaceholder(searchParams, sceneSequences);
   return (
     <>
       <Link
@@ -36,9 +35,7 @@ function ChoiceItem({ searchParams, sceneSequences, imgSrc, imgAlt, choiceName }
           className="rounded-full border border-solid"
           alt={imgAlt}
           priority={true}
-          quality={50}
-          placeholder="blur"
-          blurDataURL={imgPlaceholder}
+          // quality={50}
         />
       </Link>
     </>
