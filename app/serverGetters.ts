@@ -28,8 +28,8 @@ function bufferToBase64(buffer: Buffer): string {
 }
 
 async function getBuffer(url: string) {
-  const response = await fetch(url)
-  return Buffer.from(await response.arrayBuffer())
+  const response = await fetch(url);
+  return Buffer.from(await response.arrayBuffer());
 }
 
 export async function getPlaceholderImage(url: string) {
@@ -38,15 +38,10 @@ export async function getPlaceholderImage(url: string) {
       `${process.env.NEXT_URL}_next/image?url=${encodeURIComponent(
         url
       )}&w=48&q=50`
-    )
-    const resizedBuffer = await sharp(lowResImage).resize(20).toBuffer()
-    return {
-      placeholder: bufferToBase64(resizedBuffer),
-    }
+    );
+    const resizedBuffer = await sharp(lowResImage).resize(20).toBuffer();
+    return bufferToBase64(resizedBuffer);
   } catch {
-    return {
-      placeholder:
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOsa2yqBwAFCAICLICSyQAAAABJRU5ErkJggg==',
-    }
+    return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOsa2yqBwAFCAICLICSyQAAAABJRU5ErkJggg==';
   }
 }

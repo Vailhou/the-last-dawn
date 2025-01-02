@@ -5,6 +5,7 @@ export type Choice = {
 
 export type Scene = {
   image: string
+  imagePlaceholder: string
   texts: string[]
 }
 

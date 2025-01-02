@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { charm } from "./fonts/fonts";
-import { getImgSrc, getNextLink, getText } from "./clientGetters";
+import { getImgPlaceholder, getImgSrc, getNextLink, getText } from "./clientGetters";
 import { use } from "react";
 import { useAsyncParamsContext } from "./asyncParamsContext";
 
@@ -40,6 +40,8 @@ export default function Content() {
   }
   const link = getNextLink(searchParams, sceneSequences);
   const imgSrc = getImgSrc(searchParams, sceneSequences);
+  const imgPlaceholder = getImgPlaceholder(searchParams, sceneSequences);
+
   return (
     <div className="flex flex-grow flex-col gap-8 justify-center items-center h-full w-full">
       <Link
@@ -58,7 +60,7 @@ export default function Content() {
           height={300}
           priority={true}
           placeholder="blur"
-          blurDataURL={imgSrc}
+          blurDataURL={imgPlaceholder}
           quality={50}
         />
       </Link>

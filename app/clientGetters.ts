@@ -72,9 +72,17 @@ export function getText(searchParams: SearchParams, sceneSequences: SceneSequenc
   return scene.texts[searchParams.textIndex];
 }
 
+export function formImgSrc(imageName: string) {
+  return imageFolder + imageName;
+}
+
 export function getImgSrc(searchParams: SearchParams, sceneSequences: SceneSequence[]) {
   const imageName = getScene(searchParams, sceneSequences).image;
-  return imageFolder + imageName;
+  return formImgSrc(imageName);
+}
+
+export function getImgPlaceholder(searchParams: SearchParams, sceneSequences: SceneSequence[]) {
+  return getScene(searchParams, sceneSequences).imagePlaceholder;
 }
 
 export function getChoices(searchParams: SearchParams, sceneSequences: SceneSequence[]) {
@@ -82,7 +90,7 @@ export function getChoices(searchParams: SearchParams, sceneSequences: SceneSequ
   return sceneSequence.choices;
 }
 
-function formLink(sceneSequenceName: string, sceneIndex: number, textIndex: number, isChoiceActive: boolean) {
+export function formLink(sceneSequenceName: string, sceneIndex: number, textIndex: number, isChoiceActive: boolean) {
   return (
     "?sequence=" + sceneSequenceName +
     "&scene=" + sceneIndex +
