@@ -16,11 +16,11 @@ type ChoiceItem = {
   choiceName: string
 }
 
+//TODO: add padding to the icons
 function ChoiceItem({ searchParams, sceneSequences, imgSrc, imgAlt, choiceName }: ChoiceItem) {
   const link = getSceneSequenceLink(searchParams, sceneSequences, choiceName);
   return (
     <>
-    
       <Link
         href={link}
         className={`${charm.className} ${!searchParams.isChoiceActive ? "pointer-events-none" : ""} size-16 sm:size-24`}
