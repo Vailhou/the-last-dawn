@@ -52,7 +52,7 @@ function getChoiceItems(searchParams: SearchParams, sceneSequences: SceneSequenc
           <ChoiceItem
             searchParams={searchParams}
             sceneSequences={sceneSequences}
-            imgSrc="/iconImages/rose_icon.jpg"
+            imgSrc="/iconImages/rose_icon.png"
             imgAlt="Rose"
             choiceName={"romantic"}
             key={"romantic"}
