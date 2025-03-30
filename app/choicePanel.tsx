@@ -20,6 +20,7 @@ function ChoiceItem({ searchParams, sceneSequences, imgSrc, imgAlt, choiceName }
   const link = getSceneSequenceLink(searchParams, sceneSequences, choiceName);
   return (
     <>
+    
       <Link
         href={link}
         className={`${charm.className} ${!searchParams.isChoiceActive ? "pointer-events-none" : ""} size-16 sm:size-24`}
@@ -28,15 +29,23 @@ function ChoiceItem({ searchParams, sceneSequences, imgSrc, imgAlt, choiceName }
         replace={true}
         prefetch={true}
       >
-        <Image
-          src={imgSrc}
-          width={128}
-          height={128}
-          className="rounded-full border border-solid"
-          alt={imgAlt}
-          priority={true}
-          // quality={50}
-        />
+        <div className="relative w-[154px] h-[154px] p-[20px]">
+           <div
+            className="absolute inset-0 bg-no-repeat bg-center bg-contain"
+            style={{
+              backgroundImage: "url('/iconImages/icon_borders.png')",
+              backgroundPosition: "center",
+            }}
+          ></div>
+          <Image
+            src={imgSrc}
+            width={128}
+            height={128}
+            alt={imgAlt}
+            priority={true}
+            className="block"
+          />
+        </div>
       </Link>
     </>
   )
