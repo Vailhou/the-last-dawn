@@ -16,7 +16,7 @@
   ],
   "scenes": [
     {
-      "image": "beginning1.png",
+      "image": "mansion_overview.png",
       "texts": [
         "The moonlight gave us our moments together."
       ]
@@ -29,7 +29,7 @@
       ]
     },
     {
-      "image": "mansion_closeup.png", 
+      "image": "love.png", 
       "texts": [
         "I loved you. I never knew I could love so much."
       ]
