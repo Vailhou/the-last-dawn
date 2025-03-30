@@ -52,7 +52,7 @@ function getChoiceItems(searchParams: SearchParams, sceneSequences: SceneSequenc
           <ChoiceItem
             searchParams={searchParams}
             sceneSequences={sceneSequences}
-            imgSrc="/rose.jpg"
+            imgSrc="/iconImages/rose_icon.jpg"
             imgAlt="Rose"
             choiceName={"romantic"}
             key={"romantic"}
@@ -64,7 +64,7 @@ function getChoiceItems(searchParams: SearchParams, sceneSequences: SceneSequenc
           <ChoiceItem
             searchParams={searchParams}
             sceneSequences={sceneSequences}
-            imgSrc="/dagger.png"
+            imgSrc="/iconImages/dagger_icon.png"
             imgAlt="Dagger"
             choiceName={"violent"}
             key={"violent"}
@@ -76,7 +76,7 @@ function getChoiceItems(searchParams: SearchParams, sceneSequences: SceneSequenc
           <ChoiceItem
             searchParams={searchParams}
             sceneSequences={sceneSequences}
-            imgSrc="/letter.png"
+            imgSrc="/iconImages/letter_icon.png"
             imgAlt="Letter"
             choiceName={"neutral"}
             key={"neutral"}
