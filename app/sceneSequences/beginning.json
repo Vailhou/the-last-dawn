@@ -18,16 +18,34 @@
     {
       "image": "beginning1.png",
       "texts": [
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-        "Curabitur mattis ex molestie ex convallis, sit amet consequat diam pulvinar.",
-        "Etiam finibus quis lorem sit amet vehicula."
+        "The moonlight gave us our moments together."
       ]
     },
     {
-      "image": "beginning2.png",
+      "image": "mansion_closeup.png",
       "texts": [
-        "Sed rutrum iaculis ligula, vitae venenatis justo pulvinar id.",
-        "Donec vestibulum pellentesque tellus, ut vestibulum lacus lobortis vel."
+        "I am grateful for them",
+        "More grateful than for my own life."
+      ]
+    },
+    {
+      "image": "mansion_closeup.png", 
+      "texts": [
+        "I loved you. I never knew I could love so much."
+      ]
+    },
+    {
+      "image": "mansion_closeup.png",
+      "texts": [
+        "Then everything changed."
+      ]
+    },
+    {
+      "image": "mansion_closeup.png", 
+      "texts": [
+        "I knew you loved me, but I never thought you would ever ask me for this.",
+        "Maybe I just didn't want to accept it.",
+        "I knew you wanted to share eternity with me."
       ]
     }
   ]
