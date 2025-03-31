@@ -1,0 +1,37 @@
+{
+  "name": "dagger_storyline",
+  "choices": [
+    {
+      "name": "neutral",
+      "sceneSequenceName": "burn_alone_end"
+    }
+  ],
+  "scenes": [
+    {
+      "image": "second1.png",
+      "texts": [
+        "I was hoping for a while myself, but the third sunset confirmed that you were really dead"
+      ]
+    },
+    {
+      "image":"second1.png",
+      "texts":[
+        "The life you had brought to me withered before my eyes",
+        "I wish I had been home that night"
+      ]
+    },
+    {
+      "image": "second2.png",
+      "texts": [
+        "The nights had never felt so long"
+      ]
+    },
+    {
+      "image":"second2.png",
+      "texts": [
+        "Maybe it was the grief that made me careless",
+        "Maybe it made me want to get caught"
+      ]
+    }
+  ]
+}
