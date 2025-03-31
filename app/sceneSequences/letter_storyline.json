@@ -1,18 +1,18 @@
 {
-  "name": "third",
+  "name": "letter_storyline",
   "choices": [
     {
       "name": "romantic",
-      "sceneSequenceName": "last"
+      "sceneSequenceName": "end"
     },
     {
       "name": "violent",
-      "sceneSequenceName": "last"
+      "sceneSequenceName": "end"
     }
   ],
   "scenes": [
     {
-      "image": "third1.png",
+      "image": "locket_with_letter.png",
       "texts": [
         "Suspendisse aliquam nulla porttitor augue blandit ultricies.",
         "Pellentesque quis sem eget purus tristique consequat.",

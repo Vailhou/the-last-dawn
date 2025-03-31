@@ -1,5 +1,5 @@
 {
-  "name": "first",
+  "name": "rose_storyline",
   "choices": [
     {
       "name": "violent",
@@ -12,7 +12,7 @@
   ],
   "scenes": [
     {
-      "image": "first1.png",
+      "image": "locket_with_rose.png",
       "texts": [
         "Proin ac accumsan lorem.",
         "Donec vitae justo dignissim, suscipit urna sed, efficitur mauris.",
