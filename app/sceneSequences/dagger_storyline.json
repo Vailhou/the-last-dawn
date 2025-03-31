@@ -8,6 +8,17 @@
   ],
   "scenes": [
     {
+      "image":"locket_with_blood.png",
+      "texts":[
+        "You didn't listen.",
+        "You gave yourself no choice.",
+        "I tried to stop, but I was too late.",
+        "You had invited a guest.",
+        "A stranger who broke his promise.",
+        "You didn't wake up like you thought you would."
+      ]
+    },
+    {
       "image": "second1.png",
       "texts": [
         "I was hoping for a while myself, but the third sunset confirmed that you were really dead"
