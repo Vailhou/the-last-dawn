@@ -3,7 +3,7 @@
   "choices": [
     {
       "name": "romantic",
-      "sceneSequenceName": "first"
+      "sceneSequenceName": "rose_storyline"
     },
     {
       "name": "violent",
@@ -11,7 +11,7 @@
     },
     {
       "name": "neutral",
-      "sceneSequenceName": "third"
+      "sceneSequenceName": "letter_storyline"
     }
   ],
   "scenes": [
