@@ -2,28 +2,35 @@
   "name": "dagger_storyline",
   "choices": [
     {
-      "name": "romantic",
-      "sceneSequenceName": "last"
-    },
-    {
       "name": "neutral",
-      "sceneSequenceName": "last"
+      "sceneSequenceName": "burn_alone_end"
     }
   ],
   "scenes": [
     {
       "image": "second1.png",
       "texts": [
-        "Aliquam erat nisl, facilisis quis elit sit amet, egestas blandit ex.",
-        "Integer eu cursus arcu. Donec blandit leo in ante feugiat, id dictum ipsum sodales.",
-        "Donec accumsan fermentum tellus ac malesuada."
+        "I was hoping for a while myself, but the third sunset confirmed that you were really dead"
+      ]
+    },
+    {
+      "image":"second1.png",
+      "texts":[
+        "The life you had brought to me withered before my eyes",
+        "I wish I had been home that night"
       ]
     },
     {
       "image": "second2.png",
       "texts": [
-        "Sed aliquet, lorem eu sollicitudin accumsan, arcu elit semper odio, eleifend fringilla justo erat id quam.",
-        "Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
+        "The nights had never felt so long"
+      ]
+    },
+    {
+      "image":"second2.png",
+      "texts": [
+        "Maybe it was the grief that made me careless",
+        "Maybe it made me want to get caught"
       ]
     }
   ]

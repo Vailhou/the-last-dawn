@@ -1,0 +1,31 @@
+{
+  "name": "burn_alone_end",
+  "choices": [
+  ],
+  "scenes": [
+    {
+      "image": "last1.png",
+      "texts": [
+        "I should have gone with you right away.",
+        "But I didn't dare.",
+        "Could you have believed?",
+        "A undead who fears death."
+      ]
+    },
+    {
+      "image":"last1.png",
+      "texts":[
+        "But now is the time.",
+        "But not of my own free will.",
+        "Maybe it's better that way.",
+        "Humans get what they want."
+      ]
+    },
+    {
+      "image":"last1.png",
+      "texts":[
+        "And I'm gonna come to you"
+      ]
+    }
+  ]
+}
