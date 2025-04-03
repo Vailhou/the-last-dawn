@@ -11,21 +11,26 @@
       "image":"locket_with_blood.png",
       "texts":[
         "You didn't listen.",
-        "You gave yourself no choice.",
+        "You gave yourself no choice."
+      ]
+    },
+    {
+      "image": "wife_bed_roses_bitemarks.png",
+      "texts":[
         "I tried to stop, but I was too late.",
         "You had invited a guest.",
         "A stranger who broke his promise.",
         "You didn't wake up like you thought you would."
-      ]
+      ]      
     },
     {
-      "image": "second1.png",
+      "image": "wife_bed_roses_bitemarks_sunlight.png",
       "texts": [
         "I was hoping for a while myself, but the third sunset confirmed that you were really dead"
       ]
     },
     {
-      "image":"second1.png",
+      "image":"wife_bed_roses_bitemarks_sunlight_no_roses.png",
       "texts":[
         "The life you had brought to me withered before my eyes",
         "I wish I had been home that night"
