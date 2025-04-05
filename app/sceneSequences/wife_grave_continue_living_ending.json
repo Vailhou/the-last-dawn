@@ -1,0 +1,31 @@
+{
+  "name": "wife_grave_continue_living_ending",
+  "choices": [
+  ],
+  "scenes": [
+    {
+      "image": "wife_grave.png",
+      "texts": [
+        "I should have gone with you right away.",
+        "But I didn't dare.",
+        "Could you have believed?",
+        "A undead who fears death."
+      ]
+    },
+    {
+      "image":"wife_grave_sunlight.png",
+      "texts":[
+        "But now is the time.",
+        "But not of my own free will.",
+        "Maybe it's better that way.",
+        "Humans get what they want."
+      ]
+    },
+    {
+      "image":"burning_eyes.png",
+      "texts":[
+        "And I'm gonna come to you"
+      ]
+    }
+  ]
+}
