@@ -22,9 +22,26 @@
     {
       "image": "first2.png",
       "texts": [
-        "Praesent non arcu consequat, vehicula arcu eget, varius lorem.",
-        "Etiam non ipsum sed est porta finibus eu at libero."
+        "You lived your days, as you have done in the past.",
+        "But the evenings were different."
+      ]
+    },
+    {
+      "image": "first2.png",
+      "texts": [
+        "You invited me to your nectarine.",
+        "You let its warmth overwhelm me."
+      ]
+    },
+    {
+      "image": "first2.png",
+      "texts": [
+        "I watched you offer your neck.",
+        "I watched as your veins ran out more and more every night.",
+        "How your lips narrowed and your face grew pale.",
+        "Maybe you wished it was that easy. That you could share eternity with me after all."
       ]
     }
+
   ]
 }
