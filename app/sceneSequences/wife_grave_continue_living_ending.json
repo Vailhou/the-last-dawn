@@ -6,25 +6,17 @@
     {
       "image": "wife_grave.png",
       "texts": [
-        "I should have gone with you right away.",
-        "But I didn't dare.",
-        "Could you have believed?",
-        "A undead who fears death."
+        "Enough time passed that I knew you had left.",
+        "Still, I hoped I wouldn't find your grave.",
+        "The carving on the stone revealed your final resting place."
       ]
     },
     {
-      "image":"wife_grave_sunlight.png",
+      "image":"wife_grave.png",
       "texts":[
-        "But now is the time.",
-        "But not of my own free will.",
-        "Maybe it's better that way.",
-        "Humans get what they want."
-      ]
-    },
-    {
-      "image":"burning_eyes.png",
-      "texts":[
-        "And I'm gonna come to you"
+        "Let this be goodbye, at least for now.",
+        "I promise to come to you.",
+        "Someday."
       ]
     }
   ]
