@@ -3,11 +3,11 @@
   "choices": [
     {
       "name": "romantic",
-      "sceneSequenceName": "end"
+      "sceneSequenceName": "begging"
     },
     {
       "name": "violent",
-      "sceneSequenceName": "end"
+      "sceneSequenceName": "wife_caught"
     }
   ],
   "scenes": [
