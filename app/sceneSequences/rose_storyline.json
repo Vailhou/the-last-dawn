@@ -3,7 +3,7 @@
   "choices": [
     {
       "name": "violent",
-      "sceneSequenceName": "end"
+      "sceneSequenceName": "hooked_blood"
     },
     {
       "name": "neutral",
