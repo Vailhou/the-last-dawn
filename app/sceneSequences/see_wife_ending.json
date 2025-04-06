@@ -1,0 +1,15 @@
+{
+  "name": "see_wife_ending",
+  "choices": [
+  ],
+  "scenes": [
+    {
+      "image":"angry_people.png",
+      "texts": [
+        "Just a moment more, then it's time to go.",
+        "I'm glad I get to spend that moment with you.",
+        "Even if others don't know about it."
+      ]
+    }
+  ]
+}
