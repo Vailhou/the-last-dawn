@@ -1,0 +1,25 @@
+{
+  "name": "hooked_blood",
+  "choices": [
+    {
+      "name": "neutral",
+      "sceneSequenceName": "burn_alone_end"
+    }
+  ],
+  "scenes": [
+    {
+      "image": "wife_grave.png",
+      "texts": [
+        "I wasn't prepared for how hard it would take hold of me.",
+        "I shouldn't have.."
+      ]
+    },
+    {
+      "image":"wife_grave.png",
+      "texts":[
+        "...",
+        "I’m sorry."
+      ]
+    }
+  ]
+}
