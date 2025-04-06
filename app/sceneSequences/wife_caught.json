@@ -1,0 +1,26 @@
+{
+  "name": "wife_caught",
+  "choices": [
+    {
+      "name":"romantic",
+      "sceneSequenceName":"wife_grave_continue_living_ending"
+    }
+  ],
+  "scenes": [
+    {
+      "image":"angry_people.png",
+      "texts": [
+        "I should have told you in more detail.",
+        "But it was already too late.",
+        "I didn't want you to see what humans are capable of."
+      ]
+    },
+    {
+      "image":"angry_people.png",
+      "texts": [
+        "Humans thought you were behind it all.",
+        "Fools."
+      ]
+    }
+  ]
+}
