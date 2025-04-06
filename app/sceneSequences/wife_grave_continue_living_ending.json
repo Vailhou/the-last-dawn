@@ -1,0 +1,23 @@
+{
+  "name": "wife_grave_continue_living_ending",
+  "choices": [
+  ],
+  "scenes": [
+    {
+      "image": "wife_grave.png",
+      "texts": [
+        "Enough time passed that I knew you had left.",
+        "Still, I hoped I wouldn't find your grave.",
+        "The carving on the stone revealed your final resting place."
+      ]
+    },
+    {
+      "image":"wife_grave.png",
+      "texts":[
+        "Let this be goodbye, at least for now.",
+        "I promise to come to you.",
+        "Someday."
+      ]
+    }
+  ]
+}
