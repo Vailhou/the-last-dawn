@@ -21,19 +21,23 @@ body {
 }
 
 .border-pulse {
-  animation: pulse 1s ease-in-out infinite;
-  box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.5);
-  border-radius: 0.75rem;
+  border: 2px solid rgba(255, 255, 255, 0.6); /* Ohut ja himmeä alkuperäinen väri */
+  border-radius: 12px; /* Pyöristetyt kulmat */
+  animation: pulse-animation 2s ease-in-out infinite; /* Animaatio, joka toistuu jatkuvasti */
 }
 
-@keyframes pulse {
+/* Pulssimainen animaatio, joka tuo "unimaisen" vaikutelman */
+@keyframes pulse-animation {
   0% {
-    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.6); /* Lähtötilanteessa himmeä väri */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3); /* Hieman sumuinen valo alussa */
   }
   50% {
-    box-shadow: 0 0 0 12px rgba(255, 255, 255, 0.6);
+    border-color: rgba(255, 255, 255, 1); /* Vahvempi, kirkas väri */
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.6); /* Kirkastettu hehku */
   }
   100% {
-    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.6); /* Palataan alkuperäiseen väriin */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3); /* Hehku heikkenee */
   }
 }

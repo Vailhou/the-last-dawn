@@ -4,14 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { charm } from "./fonts/fonts";
 import { useAsyncParamsContext } from "./asyncParamsContext";
-import { use } from "react";
+import { use, useEffect, useState } from "react"; // Tässä lisätty useEffect ja useState
 import { getChoices, getSceneSequenceLink } from "./clientGetters";
 import { SceneSequence, SearchParams } from "./types";
-import { useEffect, useState } from "react";
 
 type ChoiceItem = {
   searchParams: SearchParams
-  sceneSequences: SceneSequence[]
+  sceneSequences: SceneSequence[]  
   imgSrc: string
   imgAlt: string
   choiceName: string
@@ -24,24 +23,26 @@ function ChoiceItem({ searchParams, sceneSequences, imgSrc, imgAlt, choiceName }
   useEffect(() => {
     if (searchParams.isChoiceActive) {
       setFlash(true);
-      const timer = setTimeout(() => setFlash(false), 1500);
+      const timer = setTimeout(() => setFlash(false), 1500); // Poistetaan pulssi 1.5 sekunnin jälkeen
       return () => clearTimeout(timer);
     }
   }, [searchParams.isChoiceActive]);
 
   const link = getSceneSequenceLink(searchParams, sceneSequences, choiceName);
+
   return (
     <>
       <Link
         href={link}
-        className={`${charm.className} ${!searchParams.isChoiceActive ? "pointer-events-none" : ""} ${flash ? "border-pulse" : ""} size-16 sm:size-24`}
+        className={`${charm.className} ${!searchParams.isChoiceActive ? "pointer-events-none" : ""} size-16 sm:size-24`}
         aria-disabled={!searchParams.isChoiceActive}
         tabIndex={!searchParams.isChoiceActive ? -1 : undefined}
         replace={true}
         prefetch={true}
       >
         <div className="relative w-[154px] h-[154px] p-[20px]">
-           <div
+          {/* Border-pulse vain ikonin ympärille */}
+          <div
             className={`absolute inset-0 bg-no-repeat bg-center bg-contain ${flash ? "border-pulse" : ""}`}
             style={{
               backgroundImage: "url('/iconImages/icon_borders.png')",
