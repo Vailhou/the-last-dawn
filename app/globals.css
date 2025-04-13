@@ -16,27 +16,16 @@
   .choice-item {
     width: 120px; 
     height: 120px;
+    margin-right: 20px;
   }
   .border-pulse {
-    animation: pulse 3s infinite;  /* Pidempi animaatio */
+    animation: pulse 3s infinite;
   }
 }
 
-@media (max-width: 1024px) {
-  .choice-item {
-    width: 140px;
-    height: 140px;
-  }
-  .border-pulse {
-    animation: pulse 2.5s infinite;
-  }
-}
-
-
-/* Isot mobiililaitteet ja tabletit */
-@media (max-width: 1024px) {
-  .border-pulse {
-    animation: pulse 2.5s infinite;  /* Pidempi animaatio */
+@media (min-width: 1024px) {
+  .choice-panel {
+    margin-right: 30px; /* Voit säätää tätä arvoa tarpeen mukaan */
   }
 }
 

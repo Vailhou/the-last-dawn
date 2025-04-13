@@ -121,7 +121,7 @@ export default function ChoicePanel() {
     )
   }
   return (
-    <div className="flex w-full sm:w-auto sm:h-full flex-fow sm:flex-col px-2 py-2 sm:items-start justify-evenly md:px-2">
+    <div className="choice-panel flex w-full sm:w-auto sm:h-full flex-fow sm:flex-col px-2 py-2 sm:items-start justify-evenly md:px-2">
       {getChoiceItems(searchParams, sceneSequences)}
     </div>
   );
