@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from "react"; 
+
 import Image from "next/image";
 import Link from "next/link";
 import { charm } from "./fonts/fonts";
@@ -16,59 +16,41 @@ type ChoiceItem = {
   choiceName: string
 }
 
-const ChoiceItem = ({
-  searchParams,
-  sceneSequences,
-  imgSrc,
-  imgAlt,
-  choiceName,
-}: ChoiceItem) => {
-  const [flash, setFlash] = useState(false); // Käytämme useState
-
-  // Käynnistämme välkähdyksen, kun valinta aktivoituu
-  useEffect(() => {
-    if (searchParams.isChoiceActive) {
-      setFlash(true);
-      const timer = setTimeout(() => {
-        setFlash(false); // Poistamme välkähdyksen 2 sekunnin jälkeen
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [searchParams.isChoiceActive]); // Effect tapahtuu, kun 'isChoiceActive' muuttuu
-
+//TODO: add padding to the icons
+function ChoiceItem({ searchParams, sceneSequences, imgSrc, imgAlt, choiceName }: ChoiceItem) {
   const link = getSceneSequenceLink(searchParams, sceneSequences, choiceName);
-
   return (
-    <Link
-      href={link}
-      className={`${charm.className} ${!searchParams.isChoiceActive ? "pointer-events-none" : ""} ${flash ? "border-pulse" : ""} size-16 sm:size-24`}
-      aria-disabled={!searchParams.isChoiceActive}
-      tabIndex={!searchParams.isChoiceActive ? -1 : undefined}
-      replace={true}
-      prefetch={true}
-    >
-      <div className="relative w-[180px] h-[180px] p-[16px]"> {/* Neliömäinen muoto ja suurempi koko */}
-        <div
-          className={`absolute inset-0 bg-no-repeat bg-center bg-contain ${flash ? "border-pulse" : ""}`}
-          style={{
-            backgroundImage: "url('/iconImages/icon_borders.png')",
-            backgroundPosition: "center",
-          }}
-        ></div>
-        <Image
-          src={imgSrc}
-          width={160} 
-          height={160} 
-          alt={imgAlt}
-          priority={true}
-          className="block"
-        />
-      </div>
-    </Link>
-  );
-};
+    <>
+      <Link
+        href={link}
+        className={`${charm.className} ${!searchParams.isChoiceActive ? "pointer-events-none" : ""} size-16 sm:size-24`}
+        aria-disabled={!searchParams.isChoiceActive}
+        tabIndex={!searchParams.isChoiceActive ? -1 : undefined}
+        replace={true}
+        prefetch={true}
+      >
+        <div className="relative w-[154px] h-[154px] p-[20px]">
+           <div
+            className="absolute inset-0 bg-no-repeat bg-center bg-contain"
+            style={{
+              backgroundImage: "url('/iconImages/icon_borders.png')",
+              backgroundPosition: "center",
+            }}
+          ></div>
+          <Image
+            src={imgSrc}
+            width={128}
+            height={128}
+            alt={imgAlt}
+            priority={true}
+            className="block"
+          />
+        </div>
+      </Link>
+    </>
+  )
+}
 
-// Funktio valintojen luomiseen
 function getChoiceItems(searchParams: SearchParams, sceneSequences: SceneSequence[]) {
   const choices = getChoices(searchParams, sceneSequences);
   const choiceItems: JSX.Element[] = [];
@@ -121,13 +103,11 @@ export default function ChoicePanel() {
   const asyncParams = use(useAsyncParamsContext());
   const searchParams = asyncParams.searchParams;
   const sceneSequences = asyncParams.sceneSequences;
-
   if (searchParams.sceneSequenceName === "end") {
     return (
       <></>
-    );
+    )
   }
-
   return (
     <div className="flex w-full sm:w-auto sm:h-full flex-fow sm:flex-col px-2 py-2 sm:items-start justify-evenly md:px-2">
       {getChoiceItems(searchParams, sceneSequences)}
