@@ -7,6 +7,7 @@ import { useAsyncParamsContext } from "./asyncParamsContext";
 import { use } from "react";
 import { getChoices, getSceneSequenceLink } from "./clientGetters";
 import { SceneSequence, SearchParams } from "./types";
+import { useEffect, useState } from "react";
 
 type ChoiceItem = {
   searchParams: SearchParams
@@ -18,12 +19,22 @@ type ChoiceItem = {
 
 //TODO: add padding to the icons
 function ChoiceItem({ searchParams, sceneSequences, imgSrc, imgAlt, choiceName }: ChoiceItem) {
+  const [flash, setFlash] = useState(false);
+
+  useEffect(() => {
+    if (searchParams.isChoiceActive) {
+      setFlash(true);
+      const timer = setTimeout(() => setFlash(false), 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [searchParams.isChoiceActive]);
+
   const link = getSceneSequenceLink(searchParams, sceneSequences, choiceName);
   return (
     <>
       <Link
         href={link}
-        className={`${charm.className} ${!searchParams.isChoiceActive ? "pointer-events-none" : ""} size-16 sm:size-24`}
+        className={`${charm.className} ${!searchParams.isChoiceActive ? "pointer-events-none" : ""} ${flash ? "border-pulse" : ""} size-16 sm:size-24`}
         aria-disabled={!searchParams.isChoiceActive}
         tabIndex={!searchParams.isChoiceActive ? -1 : undefined}
         replace={true}
@@ -31,7 +42,7 @@ function ChoiceItem({ searchParams, sceneSequences, imgSrc, imgAlt, choiceName }
       >
         <div className="relative w-[154px] h-[154px] p-[20px]">
            <div
-            className="absolute inset-0 bg-no-repeat bg-center bg-contain"
+            className={`absolute inset-0 bg-no-repeat bg-center bg-contain ${flash ? "border-pulse" : ""}`}
             style={{
               backgroundImage: "url('/iconImages/icon_borders.png')",
               backgroundPosition: "center",
