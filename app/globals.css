@@ -25,7 +25,7 @@
 
 @media (min-width: 1024px) {
   .choice-panel {
-    margin-right: 30px; /* Voit säätää tätä arvoa tarpeen mukaan */
+    margin-right: 30px;
   }
 }
 
@@ -36,23 +36,22 @@ body {
 }
 
 .border-pulse {
-  border: 2px solid rgba(255, 255, 255, 0.6); /* Ohut ja himmeä alkuperäinen väri */
-  border-radius: 12px; /* Pyöristetyt kulmat */
-  animation: pulse-animation 2s ease-in-out infinite; /* Animaatio, joka toistuu jatkuvasti */
+  border: 2px solid rgba(255, 255, 255, 0.6); 
+  border-radius: 12px; 
+  animation: pulse-animation 2s ease-in-out infinite; 
 }
 
-/* Pulssimainen animaatio, joka tuo "unimaisen" vaikutelman */
 @keyframes pulse-animation {
   0% {
-    border-color: rgba(255, 255, 255, 0.6); /* Lähtötilanteessa himmeä väri */
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3); /* Hieman sumuinen valo alussa */
+    border-color: rgba(255, 255, 255, 0.6); 
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
   }
   50% {
-    border-color: rgba(255, 255, 255, 1); /* Vahvempi, kirkas väri */
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.6); /* Kirkastettu hehku */
+    border-color: rgba(255, 255, 255, 1); 
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.6); 
   }
   100% {
-    border-color: rgba(255, 255, 255, 0.6); /* Palataan alkuperäiseen väriin */
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3); /* Hehku heikkenee */
+    border-color: rgba(255, 255, 255, 0.6); 
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
   }
 }
