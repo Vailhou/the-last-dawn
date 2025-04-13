@@ -3,14 +3,40 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000;
+  --foreground: #fff3e3;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.choice-item {
+  width: 160px;
+  height: 160px;
+}
+
+@media (max-width: 640px) {
+  .choice-item {
+    width: 120px; 
+    height: 120px;
+  }
+  .border-pulse {
+    animation: pulse 3s infinite;  /* Pidempi animaatio */
+  }
+}
+
+@media (max-width: 1024px) {
+  .choice-item {
+    width: 140px;
+    height: 140px;
+  }
+  .border-pulse {
+    animation: pulse 2.5s infinite;
+  }
+}
+
+
+/* Isot mobiililaitteet ja tabletit */
+@media (max-width: 1024px) {
+  .border-pulse {
+    animation: pulse 2.5s infinite;  /* Pidempi animaatio */
   }
 }
 
