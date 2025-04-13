@@ -8,14 +8,14 @@
   ],
   "scenes": [
     {
-      "image": "wife_grave.png",
+      "image": "kill_wife.png",
       "texts": [
         "I wasn't prepared for how hard it would take hold of me.",
         "I shouldn't have.."
       ]
     },
     {
-      "image":"wife_grave.png",
+      "image":"kill_wife_blood.png",
       "texts":[
         "...",
         "I’m sorry."

@@ -4,7 +4,7 @@
   ],
   "scenes": [
     {
-      "image": "last1.png",
+      "image": "angry_people.png",
       "texts": [
         "I should have gone with you right away.",
         "But I didn't dare.",
@@ -13,7 +13,7 @@
       ]
     },
     {
-      "image":"last1.png",
+      "image":"burn_alone.png",
       "texts":[
         "But now is the time.",
         "But not of my own free will.",
@@ -22,7 +22,7 @@
       ]
     },
     {
-      "image":"last1.png",
+      "image":"burning_eyes.png",
       "texts":[
         "And I'm gonna come to you"
       ]
