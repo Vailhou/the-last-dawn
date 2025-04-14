@@ -4,13 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { charm } from "./fonts/fonts";
 import { useAsyncParamsContext } from "./asyncParamsContext";
-import { use } from "react";
+import { use, useEffect, useState } from "react"; // Tässä lisätty useEffect ja useState
 import { getChoices, getSceneSequenceLink } from "./clientGetters";
 import { SceneSequence, SearchParams } from "./types";
 
 type ChoiceItem = {
   searchParams: SearchParams
-  sceneSequences: SceneSequence[]
+  sceneSequences: SceneSequence[]  
   imgSrc: string
   imgAlt: string
   choiceName: string
@@ -18,7 +18,18 @@ type ChoiceItem = {
 
 //TODO: add padding to the icons
 function ChoiceItem({ searchParams, sceneSequences, imgSrc, imgAlt, choiceName }: ChoiceItem) {
+  const [flash, setFlash] = useState(false);
+
+  useEffect(() => {
+    if (searchParams.isChoiceActive) {
+      setFlash(true);
+      const timer = setTimeout(() => setFlash(false), 1500); // Poistetaan pulssi 1.5 sekunnin jälkeen
+      return () => clearTimeout(timer);
+    }
+  }, [searchParams.isChoiceActive]);
+
   const link = getSceneSequenceLink(searchParams, sceneSequences, choiceName);
+
   return (
     <>
       <Link
@@ -30,8 +41,9 @@ function ChoiceItem({ searchParams, sceneSequences, imgSrc, imgAlt, choiceName }
         prefetch={true}
       >
         <div className="relative w-[154px] h-[154px] p-[20px]">
-           <div
-            className="absolute inset-0 bg-no-repeat bg-center bg-contain"
+          {/* Border-pulse vain ikonin ympärille */}
+          <div
+            className={`absolute inset-0 bg-no-repeat bg-center bg-contain ${flash ? "border-pulse" : ""}`}
             style={{
               backgroundImage: "url('/iconImages/icon_borders.png')",
               backgroundPosition: "center",
@@ -109,7 +121,7 @@ export default function ChoicePanel() {
     )
   }
   return (
-    <div className="flex w-full sm:w-auto sm:h-full flex-fow sm:flex-col px-2 py-2 sm:items-start justify-evenly md:px-2">
+    <div className="choice-panel flex w-full sm:w-auto sm:h-full flex-fow sm:flex-col px-2 py-2 sm:items-start justify-evenly md:px-2">
       {getChoiceItems(searchParams, sceneSequences)}
     </div>
   );

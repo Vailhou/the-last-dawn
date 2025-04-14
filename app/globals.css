@@ -3,14 +3,29 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000;
+  --foreground: #fff3e3;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.choice-item {
+  width: 160px;
+  height: 160px;
+}
+
+@media (max-width: 640px) {
+  .choice-item {
+    width: 120px; 
+    height: 120px;
+    margin-right: 20px;
+  }
+  .border-pulse {
+    animation: pulse 3s infinite;
+  }
+}
+
+@media (min-width: 1024px) {
+  .choice-panel {
+    margin-right: 30px;
   }
 }
 
@@ -18,4 +33,25 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.border-pulse {
+  border: 2px solid rgba(255, 255, 255, 0.6); 
+  border-radius: 12px; 
+  animation: pulse-animation 2s ease-in-out infinite; 
+}
+
+@keyframes pulse-animation {
+  0% {
+    border-color: rgba(255, 255, 255, 0.6); 
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    border-color: rgba(255, 255, 255, 1); 
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.6); 
+  }
+  100% {
+    border-color: rgba(255, 255, 255, 0.6); 
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
+  }
 }
