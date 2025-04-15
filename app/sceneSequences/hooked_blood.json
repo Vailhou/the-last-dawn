@@ -20,6 +20,21 @@
         "...",
         "I’m sorry."
       ]
+    },
+    {
+      "image": "wife_grave.png",
+      "texts":[
+        "I buried you.",
+        "I left you there. Yet you didn't leave my mind."
+      ]
+    },
+    {
+      "image":"alley_alone.png",
+      "texts":[
+        "Maybe that's why I was foolish and got caught.",
+        "Maybe that's what you wanted."
+      ]
     }
+
   ]
 }
