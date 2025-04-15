@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { charm } from "./fonts/fonts";
 import { useAsyncParamsContext } from "./asyncParamsContext";
-import { use, useEffect, useState } from "react"; // Tässä lisätty useEffect ja useState
+import { use, useEffect, useState } from "react";
 import { getChoices, getSceneSequenceLink } from "./clientGetters";
 import { SceneSequence, SearchParams } from "./types";
 
@@ -22,7 +22,7 @@ function ChoiceItem({ searchParams, sceneSequences, imgSrc, imgAlt, choiceName }
   useEffect(() => {
     if (searchParams.isChoiceActive) {
       setFlash(true);
-      const timer = setTimeout(() => setFlash(false), 1500); // Poistetaan pulssi 1.5 sekunnin jälkeen
+      const timer = setTimeout(() => setFlash(false), 1500);
       return () => clearTimeout(timer);
     }
   }, [searchParams.isChoiceActive]);
@@ -40,7 +40,7 @@ function ChoiceItem({ searchParams, sceneSequences, imgSrc, imgAlt, choiceName }
         prefetch={true}
       >
         <div className="relative w-[154px] h-[154px] p-[20px]">
-          {/* Border-pulse vain ikonin ympärille */}
+          {}
           <div
             className={`absolute inset-0 bg-no-repeat bg-center bg-contain ${flash ? "border-pulse" : ""}`}
             style={{
