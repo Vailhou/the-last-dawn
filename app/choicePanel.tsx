@@ -16,7 +16,6 @@ type ChoiceItem = {
   choiceName: string
 }
 
-//TODO: add padding to the icons
 function ChoiceItem({ searchParams, sceneSequences, imgSrc, imgAlt, choiceName }: ChoiceItem) {
   const [flash, setFlash] = useState(false);
 
