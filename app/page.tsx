@@ -3,6 +3,7 @@ import Content from "./content";
 import { getPlaceholderImage, getSceneSequences } from "./serverGetters";
 import { RawSearchParams, SceneSequence, SearchParams } from "./types";
 import { AsyncParamsProvider } from "./asyncParamsContext";
+import StartScreen from "./startScreen";
 
 const imageFolder = "/sceneImages/";
 
@@ -16,6 +17,11 @@ export default async function Home(props: {
     isChoiceActive: false
   }
   let sceneSequences: SceneSequence[] = [];
+  const rawSearchParams = await props.searchParams;
+
+  if (!rawSearchParams.sequence) {
+    return <StartScreen />;
+  }
 
   const searchParamsPromise = props.searchParams.then((rawSearchParams) => {
     searchParams = {
