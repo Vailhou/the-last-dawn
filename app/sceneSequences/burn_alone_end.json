@@ -16,7 +16,12 @@
       "image":"burn_alone.png",
       "texts":[
         "But now is the time.",
-        "But not of my own free will.",
+        "But not of my own free will."
+      ]
+    },
+    {
+      "image":"burn_alone_end.png",
+      "texts":[
         "Maybe it's better that way."
       ]
     }
